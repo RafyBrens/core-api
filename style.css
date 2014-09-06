@@ -1,0 +1,61 @@
+pre {
+    outline: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+}
+
+.string {
+    color: green;
+}
+
+.number {
+    color: darkorange;
+}
+
+.boolean {
+    color: blue;
+}
+
+.null {
+    color: magenta;
+}
+
+.key {
+    color: red;
+}
+
+body {
+    background-color: #FFF;
+}
+
+.description {
+    padding-left: 30px;
+    color: #51A351;
+}
+
+/*
+p{
+    border-bottom: 1px solid black;
+}
+*/
+#login {
+    float: right;
+    font-size: 20px;
+    color: #0044CC;
+}
+
+a {
+    color: #0088CC;
+}
+
+.clearBoth {
+    clear: both;
+}
+
+#header {
+    color: #BD362F;
+}
+
+#getCompanySection, #listCompanySection {
+    display: none;
+}
