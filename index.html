@@ -2,10 +2,10 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Core API console</title>
-    <script src="auth.js"></script>
-    <script src="output.js"></script>
-    <script src="navigation.js"></script>
+    <title>Rise Vision API Console</title>
+    <script src="javascript/auth.js"></script>
+    <script src="javascript/output.js"></script>
+    <script src="javascript/navigation.js"></script>
     <script type="text/javascript">
 
         // ------------------------- Authentication & Loading ----------------------------
@@ -21,16 +21,18 @@
 
             // ------------------------ Handles the submit event -------------------------
             document.getElementById('listCompany').onclick = function () {
+                reset("listCompanyResult");
                 listCompany();
             };
             document.getElementById('getCompany').onclick = function () {
+                reset("getCompanyResult");
                 getCompany();
             };
         }
 
 
-        /*
-         * This function load the api to make the request.
+        /**
+         *  This function loads the api to make the request.
          */
         function getCompany() {
             console.log('getCompany');
@@ -38,7 +40,7 @@
 
         }
 
-        /*
+        /**
          * This function gets the fields values from the form and
          * call the api using the google javascript api(gapi)
          */
@@ -62,11 +64,7 @@
 
             // jsonResp object has got a duplication of the data which comes under result element
             request.execute(function (jsonResp,rawResp) {
-                console.log(jsonResp);
-                // Because of the way the GAPI works the jsonResp object has got a duplication of the data which comes under result element
-                // So here we will output the result to avoid it.
-                var jsonData = JSON.stringify(jsonResp.result, undefined, 2);
-                output(syntaxHighlight(jsonData), 'getCompanyResult'); // see output.js
+                handlesResponse(jsonResp,rawResp,'getCompanyResult');
             })
         }
 
@@ -106,16 +104,33 @@
                 request = gapi.client.core.company.list(parameters);
 
                 request.execute(function (jsonResp,rawResp) {
-                    console.log(jsonResp);
-                    var jsonData = JSON.stringify(jsonResp.result, undefined, 2);
-                    output(syntaxHighlight(jsonData), 'listCompanyResult'); // see output.js
-                });
+                    handlesResponse(jsonResp,rawResp,'listCompanyResult');
+                  });
             }, ROOT);
+        }
+
+        /**
+         * This functions handles the response of the api call
+         * It checks if there is a valida result and
+         * sends the json to the output function
+         *
+         * @param jsonResp
+         * @param rawResp
+         */
+        function handlesResponse(jsonResp,rawResp,type){
+            console.log(jsonResp);
+            // Because of the way the GAPI works the jsonResp object has got
+            // a duplication of the data which comes under result element
+            // So here we will output the result to avoid it if there is one.
+            // There is the error case so result element would not exist on the json responce
+            var resultJson = (jsonResp.result)? jsonResp.result: jsonResp;
+            var jsonData = JSON.stringify(resultJson, undefined, 2);
+            output(syntaxHighlight(jsonData),type); // see output.js
         }
     </script>
     <script src="https://apis.google.com/js/client.js?onload=init"></script>
-    <link rel="stylesheet" href="rise.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/rise.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -123,60 +138,177 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12 content-header">
+                <!-- Navbar on the header of the console application-->
                 <nav class="navbar navbar-default" role="navigation">
-                    <div class="navbar-left">
-                        <p class="navbar-brand">Rise Vision Core API Console</p>
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <span class="navbar-brand"><img src="http://s3.amazonaws.com/rise-common/images/logo-small.png"> &nbsp;&nbsp;API Console</span>
+                            <span id="signinText" class="navbar-text">Authorize requests using OAuth 2.0:</span>
+                            <!--button id="signinButton" type="button" class="btn btn-primary btn-fixed-width navbar-btn">
+                                Sign in <i class="fa fa fa-white fa-sign-in icon-right"></i>
+                            </button-->
+                        </div>
+                        <button id="signinButton" type="button" class="btn btn-primary btn-fixed-width navbar-btn">
+                            Sign in <i class="fa fa fa-white fa-sign-in icon-right"></i>
+                        </button>
+                        <a type="button" class="btn btn-rv-help btn-fixed-width navbar-right" href="https://github.com/Rise-Vision/core-api" target="_blank">
+                            Contribute <i class="fa fa-github fa-lg "></i>
+                        </a>
                     </div>
-                    <div id="signin" class="navbar-right" >
-                        <p id="signinText" class="navbar-text">Authorize requests using OAuth 2.0:</p>
-                        <button id="signinButton" type="button" class="btn btn-default navbar-btn">Sign in</button>
-                    </div>
+                </nav>
                 </nav>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 content-body">
+            <div class="col-md-10 col-md-offset-1">
 
                 <!-- Table with all functions -->
                 <div id="listOfFunctions">
                     <div>
                         <ol class="breadcrumb">
-                            <li class="active">Rise Core API</li>
+                            <li class="active">Core API</li>
                         </ol>
                     </div>
                     <table class="table table-condensed">
                         <tbody>
+                            <!-------------------------------- Company calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','addCompanySection');" disabled="disabled" class="text-muted">core.company.add</a></td>
+                                <td><span class="description">Add a company</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','deleteCompanySection');" disabled="disabled" class="text-muted">core.company.delete</a></td>
+                                <td><span class="description">Delete a company</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','getCompanySection');">core.company.get</a></td>
                                 <td><span class="description">Gets the information about a company</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
 
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','listCompanySection');">core.company.list</a></td>
                                 <td><span class="description">List the companies under a head company</span></td>
+                                <td><span class="label label-default">New</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','moveCompanySection');" disabled="disabled" class="text-muted">core.company.move</a></td>
+                                <td><span class="description">Move a company</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','updateCompanySection');" disabled="disabled" class="text-muted">core.company.update</a></td>
+                                <td><span class="description">Update a company</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <!-------------------------------- Display calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','getDisplaySection');" disabled="disabled" class="text-muted">core.display.get</a></td>
+                                <td><span class="description">Get a display</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listDisplaySection');" disabled="disabled" class="text-muted">core.display.list</a></td>
+                                <td><span class="description">List displays</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <!-------------------------------- Schedule calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','addScheduleSection');" disabled="disabled" class="text-muted">core.schedule.add</a></td>
+                                <td><span class="description">Add a schedule</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','deleteScheduleSection');" disabled="disabled" class="text-muted">core.schedule.delete</a></td>
+                                <td><span class="description">Delete a schedule</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','getScheduleSection');" disabled="disabled" class="text-muted">core.schedule.get</a></td>
+                                <td><span class="description">Get a schedule</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listScheduleSection');" disabled="disabled" class="text-muted">core.schedule.list</a></td>
+                                <td><span class="description">List schedules</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','updateScheduleSection');" disabled="disabled" class="text-muted">core.schedule.update</a></td>
+                                <td><span class="description">Update a schedule</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <!-------------------------------- Systemmessage calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listSystemmessageSection');" disabled="disabled" class="text-muted">core.systemmessage.list</a></td>
+                                <td><span class="description">List Systemmessage</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <!-------------------------------- User calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','getUserSection');" disabled="disabled" class="text-muted">core.user.get</a></td>
+                                <td><span class="description">Get a user</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listUserSection');" disabled="disabled" class="text-muted">core.user.list</a></td>
+                                <td><span class="description">List users</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','updateUserSection');" disabled="disabled" class="text-muted">core.user.update</a></td>
+                                <td><span class="description">Update a user</span></td>
+                                <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <!-- html elements for core.company.get !-->
+                <!-- html elements for core.company.get -->
                 <div id="getCompanySection">
                     <div>
                         <ol class="breadcrumb">
-                            <li><a href="javascript:navigate('getCompanySection','listOfFunctions');">Rise Core API</a></li>
+                            <li><a href="javascript:navigate('getCompanySection','listOfFunctions');">Core API</a></li>
                             <li class="active">core.company.get</li>
                         </ol>
                     </div>
                     <div>
-                        <form class="form" action="javascript:void(0);">
-                            <div><input id="getCompany_id" placeholder="id"> <span
-                                    class="description">The ID of the Company (String)</span></div>
-                            <div><input id="getCompany_fields" placeholder="fields"> <span class="description">Selector specifying which fields to include in a partial response</span>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="getCompany_id" class="col-sm-2 control-label">Id</label>
+                                <div class="col-sm-10">
+                                    <input id="getCompany_id" placeholder="">
+                                    <span class="description">The ID of the Company (String)</span>
+                                </div>
                             </div>
-                            <div><input id="getCompany" type="submit" value="Get Company"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+                                <div class="col-sm-10">
+                                    <input id="getCompany_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="getCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </form>
                     </div>
-                    <div class="result" id="getCompanyResult"></div>
+                    <div class="row responsePanel" id="getCompanyResult">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Response</div>
+                                <div class="panel-body result" id="getCompanyResultArea">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -184,29 +316,76 @@
                 <div id="listCompanySection">
                     <div>
                         <ol class="breadcrumb">
-                            <li><a href="javascript:navigate('listCompanySection','listOfFunctions');">Rise Core API</a></li>
+                            <li><a href="javascript:navigate('listCompanySection','listOfFunctions');">Core API</a></li>
                             <li class="active">core.company.list</li>
                         </ol>
                     </div>
                     <div>
-                        <form class="form" action="javascript:void(0);">
-                            <div><input id="listCompany_companyId" placeholder="companyId"> <span class="description">The ID of the Company (String)</span>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="listCompany_companyId" class="col-sm-2 control-label">Company Id</label>
+                                <div class="col-sm-10">
+                                    <input id="listCompany_companyId" placeholder="">
+                                    <span class="description">The ID of the Company (String)</span>
+                                </div>
                             </div>
-                            <div><input id="listCompany_count" placeholder="count"> <span class="description">?? (String)</span></div>
-                            <div><input id="listCompany_cursor" placeholder="cursor"> <span class="description">?? (String)</span></div>
-                            <div><input id="listCompany_search" placeholder="search"> <span class="description">?? (String)</span></div>
-                            <div><input id="listCompany_sort" placeholder="sort"> <span class="description">?? (String)</span></div>
-                            <div><input id="listCompany_fields" placeholder="fields"> <span class="description">Selector specifying which fields to include in a partial response</span>
+                            <div class="form-group">
+                                <label for="listCompany_count" class="col-sm-2 control-label">Count</label>
+                                <div class="col-sm-10">
+                                    <input id="listCompany_count" placeholder="">
+                                    <span class="description">?? (String)</span>
+                                </div>
                             </div>
-                            <div><input id="listCompany" type="submit" value="List Company"></div>
+                            <div class="form-group">
+                                <label for="listCompany_cursor" class="col-sm-2 control-label">Cursor</label>
+                                <div class="col-sm-10">
+                                    <input id="listCompany_cursor" placeholder="">
+                                    <span class="description">?? (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listCompany_search" class="col-sm-2 control-label">Search</label>
+                                <div class="col-sm-10">
+                                    <input id="listCompany_search" placeholder="">
+                                    <span class="description">?? (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listCompany_sort" class="col-sm-2 control-label">Sort</label>
+                                <div class="col-sm-10">
+                                    <input id="listCompany_sort" placeholder="">
+                                    <span class="description">?? (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listCompany_fields" class="col-sm-2 control-label">Fields</label>
+                                <div class="col-sm-10">
+                                    <input id="listCompany_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="listCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </form>
-                        <div class="result" id="listCompanyResult"></div>
+                        <div class="row responsePanel" id="listCompanyResult">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="listCompanyResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 </body>

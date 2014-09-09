@@ -1,0 +1,47 @@
+pre {
+    /*outline: 1px solid #ccc;*/
+    /*adding: 5px;
+    margin: 5px;*/
+    border: none;
+}
+
+.string {
+    color: green;
+}
+
+.number {
+    color: darkorange;
+}
+
+.boolean {
+    color: blue;
+}
+
+.null {
+    color: magenta;
+}
+
+.key {
+    color: red;
+}
+
+.breadcrumb{
+    padding: 0px;
+}
+
+a[disabled] {
+    pointer-events: none;
+}
+
+
+.content-body{
+   margin-left: 15px;
+}
+
+/*#signinText {
+    font-size: 14px;
+}
+*/
+#getCompanySection, #listCompanySection, .responsePanel {
+    display: none;
+}
