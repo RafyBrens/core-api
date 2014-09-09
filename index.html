@@ -12,9 +12,9 @@
         function init() {
             console.log('init');
 
-            loadApi(); // see auth.js file
+            signin(true, handleAuth); // tries to authenticate the user during loading. See auth.js file
 
-            document.getElementById('loginButton').onclick = function () {
+            document.getElementById('signinButton').onclick = function () {
                 console.log('login button clicked');
                 signin(false, handleAuth); // more details in the auth.js file
             };
@@ -30,11 +30,19 @@
 
 
         /*
-         * This function gets the fields values from the form and
-         * call the api using the google javascript api(gapi)
+         * This function load the api to make the request.
          */
         function getCompany() {
             console.log('getCompany');
+            gapi.client.load(API_NAME, API_VER, makeCompanyRequest, ROOT);
+
+        }
+
+        /*
+         * This function gets the fields values from the form and
+         * call the api using the google javascript api(gapi)
+         */
+        function makeCompanyRequest(){
 
             // getting parameter values
             var _id = document.getElementById('getCompany_id').value;
@@ -50,17 +58,18 @@
             }
 
             // calling the api passing the parameter object
-            gapi.client.core.company.get(parameters).execute(function (resp) {
-                console.log(resp);
-                var jsonData = JSON.stringify(resp, undefined, 2);
+            var request = gapi.client.core.company.get(parameters);
+
+            // jsonResp object has got a duplication of the data which comes under result element
+            request.execute(function (jsonResp,rawResp) {
+                console.log(jsonResp);
+                // Because of the way the GAPI works the jsonResp object has got a duplication of the data which comes under result element
+                // So here we will output the result to avoid it.
+                var jsonData = JSON.stringify(jsonResp.result, undefined, 2);
                 output(syntaxHighlight(jsonData), 'getCompanyResult'); // see output.js
             })
         }
 
-        /*
-         * This function gets the fields values from the form and
-         * call the api using the google javascript api(gapi)
-         */
         function listCompany() {
             console.log('listCompany');
             // getting parameters values
@@ -92,79 +101,114 @@
                 parameters['fields'] = _fields
             }
 
-            // calling the api passing the parameter object
-            gapi.client.core.company.list(parameters).execute(function (resp) {
-                console.log(resp);
-                var jsonData = JSON.stringify(resp, undefined, 2);
-                output(syntaxHighlight(jsonData), 'listCompanyResult'); // see output.js
-            })
+            // loading and calling the api passing the parameter object
+            gapi.client.load(API_NAME, API_VER, function () {
+                request = gapi.client.core.company.list(parameters);
+
+                request.execute(function (jsonResp,rawResp) {
+                    console.log(jsonResp);
+                    var jsonData = JSON.stringify(jsonResp.result, undefined, 2);
+                    output(syntaxHighlight(jsonData), 'listCompanyResult'); // see output.js
+                });
+            }, ROOT);
         }
     </script>
     <script src="https://apis.google.com/js/client.js?onload=init"></script>
+    <link rel="stylesheet" href="rise.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="login">
 
-    <span>Authorize requests using OAuth 2.0:</span> <input id="loginButton" type="button" value="Login"/>
-</div>
-<div class="clearBoth"></div>
-
-<div id="listOfFunctions">
-    <div id="header"><h2>Rise Core API</h2></div>
-    <hr>
-    <div>
-        <p><a href="javascript:navigate('listOfFunctions','getCompanySection');">core.company.get</a> <span
-                class="description">Gets the information about a company</span></p>
-
-        <p><a href="javascript:navigate('listOfFunctions','listCompanySection');">core.company.list</a> <span
-                class="description">List the companies under a head company</span></p>
-    </div>
-</div>
-
-<!-- html elements for core.company.get !-->
-<div id="getCompanySection">
-    <div><a href="javascript:navigate('getCompanySection','listOfFunctions');">Rise Core API</a> > core.company.get
-    </div>
-    <hr>
-    <br>
-
-    <div>
-        <form class="form" action="javascript:void(0);">
-            <div><input id="getCompany_id" placeholder="id"> <span
-                    class="description">The ID of the Company (String)</span></div>
-            <div><input id="getCompany_fields" placeholder="fields"> <span class="description">Selector specifying which fields to include in a partial response</span>
+<div id="content" class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12 content-header">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="navbar-left">
+                        <p class="navbar-brand">Rise Vision Core API Console</p>
+                    </div>
+                    <div id="signin" class="navbar-right" >
+                        <p id="signinText" class="navbar-text">Authorize requests using OAuth 2.0:</p>
+                        <button id="signinButton" type="button" class="btn btn-default navbar-btn">Sign in</button>
+                    </div>
+                </nav>
             </div>
-            <div><input id="getCompany" type="submit" value="Get Company"></div>
-        </form>
-    </div>
-    <div class="result" id="getCompanyResult"></div>
-</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 content-body">
+
+                <!-- Table with all functions -->
+                <div id="listOfFunctions">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li class="active">Rise Core API</li>
+                        </ol>
+                    </div>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','getCompanySection');">core.company.get</a></td>
+                                <td><span class="description">Gets the information about a company</span></td>
+                            </tr>
+
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listCompanySection');">core.company.list</a></td>
+                                <td><span class="description">List the companies under a head company</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- html elements for core.company.get !-->
+                <div id="getCompanySection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('getCompanySection','listOfFunctions');">Rise Core API</a></li>
+                            <li class="active">core.company.get</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form" action="javascript:void(0);">
+                            <div><input id="getCompany_id" placeholder="id"> <span
+                                    class="description">The ID of the Company (String)</span></div>
+                            <div><input id="getCompany_fields" placeholder="fields"> <span class="description">Selector specifying which fields to include in a partial response</span>
+                            </div>
+                            <div><input id="getCompany" type="submit" value="Get Company"></div>
+                        </form>
+                    </div>
+                    <div class="result" id="getCompanyResult"></div>
+                </div>
 
 
-<!-- html elements for core.company.list !-->
-<div id="listCompanySection">
-    <div><a href="javascript:navigate('listCompanySection','listOfFunctions');">Rise Core API</a> > core.company.list
-    </div>
-    <hr>
-    <br>
-
-    <div>
-        <form class="form" action="javascript:void(0);">
-            <div><input id="listCompany_companyId" placeholder="companyId"> <span class="description">The ID of the Company (String)</span>
+                <!-- html elements for core.company.list !-->
+                <div id="listCompanySection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('listCompanySection','listOfFunctions');">Rise Core API</a></li>
+                            <li class="active">core.company.list</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form" action="javascript:void(0);">
+                            <div><input id="listCompany_companyId" placeholder="companyId"> <span class="description">The ID of the Company (String)</span>
+                            </div>
+                            <div><input id="listCompany_count" placeholder="count"> <span class="description">?? (String)</span></div>
+                            <div><input id="listCompany_cursor" placeholder="cursor"> <span class="description">?? (String)</span></div>
+                            <div><input id="listCompany_search" placeholder="search"> <span class="description">?? (String)</span></div>
+                            <div><input id="listCompany_sort" placeholder="sort"> <span class="description">?? (String)</span></div>
+                            <div><input id="listCompany_fields" placeholder="fields"> <span class="description">Selector specifying which fields to include in a partial response</span>
+                            </div>
+                            <div><input id="listCompany" type="submit" value="List Company"></div>
+                        </form>
+                        <div class="result" id="listCompanyResult"></div>
+                    </div>
+                </div>
             </div>
-            <div><input id="listCompany_count" placeholder="count"> <span class="description">?? (String)</span></div>
-            <div><input id="listCompany_cursor" placeholder="cursor"> <span class="description">?? (String)</span></div>
-            <div><input id="listCompany_search" placeholder="search"> <span class="description">?? (String)</span></div>
-            <div><input id="listCompany_sort" placeholder="sort"> <span class="description">?? (String)</span></div>
-            <div><input id="listCompany_fields" placeholder="fields"> <span class="description">Selector specifying which fields to include in a partial response</span>
-            </div>
-            <div><input id="listCompany" type="submit" value="List Company"></div>
-        </form>
-        <div class="result" id="listCompanyResult"></div>
+        </div>
+
+
     </div>
 </div>
-
 </body>
 </html>
 

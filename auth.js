@@ -12,32 +12,22 @@ var ROOT = 'https://rvacore-test.appspot.com/_ah/api';
 var API_NAME = 'core';
 var API_VER = 'v0';
 
-
-function loadApi() {
-    var apisToLoad;
-    var callback = function () {
-        if (--apisToLoad == 0) {
-            signin(true, handleAuth);
-        }
-    };
-
-
-    apisToLoad = 2;
-    //Parameters are APIName,APIVersion,CallBack function,API Root
-    gapi.client.load(API_NAME, API_VER, callback, ROOT);
-    gapi.client.load('oauth2', 'v2', callback);
-}
-
 function handleAuth() {
     console.log('handle auth');
-    var request = gapi.client.oauth2.userinfo.get().execute(function (resp) {
+    gapi.client.load('oauth2', 'v2', makeOAuth2Request);
+}
+
+function makeOAuth2Request() {
+    var request = gapi.client.oauth2.userinfo.get();
+
+    request.execute(function (resp) {
         if (!resp.code) {
             // User is signed in, so hide the button
-            //document.getElementById('loginButton').style.visibility = 'hidden';
-            document.getElementById('login').innerText = 'Welcome ' + resp.name;
+            document.getElementById('signinButton').style.display = 'none';
+            document.getElementById('signinText').innerText = 'Welcome ' + resp.name;
         }
         else {
-            document.getElementById('loginButton').style.visibility = '';
+            document.getElementById('signinButton').style.display = 'block';
         }
     });
 }
