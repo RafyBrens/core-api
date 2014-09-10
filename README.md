@@ -14,7 +14,9 @@ If you know what you are doing you can perfectly use the [interactive console](h
 
 Furthermore, you can help us to improve it. You are more then welcome to become a contributor or either suggest improvements. Please Fork and send us a pull request. If we consider your changes relevant to the time being, we will definitely merge it.      
 
-Chrome is the only browser that is supported with this application and any other browser compatibility is not planned at this time.
+Rise Vision API works in conjunction with [Rise Vision](http://www.risevision.com), the [digital signage management application](http://rva.risevision.com/) that runs on [Google Cloud](https://cloud.google.com).
+
+At this time Chrome is the only browser that this project and Rise Vision supports.
 
 ## Built With
 
@@ -92,9 +94,8 @@ var CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleuserc
 * Go to "Run Client" section in readme to see how to run this app.
 
 ### Run Client
- 
  To run the application you will need to deploy it to a web server such as the Apache Http Server. It must be configured to serve the application on http://localhost. 
-  We will not explain here how to setup such server. We consider you already know how to do that. 
+ We will not explain here how to setup such server. We consider you already know how to do that. 
 
 * deploy the application to the web server
 
@@ -105,45 +106,38 @@ var CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleuserc
 ### Testing Setup and Use
 
 ## Submitting Issues 
-
-Issues should be reported in the github issue list at https://github.com/Rise-Vision/core-api/issues  
-
-Issues should be reported with the template format as follows:
+If you encounter problems or find defects we really want to hear about them. If you could take the time to add them as issues to this Repository it would be most appreciated. When reporting issues please use the following format where applciable:
 
 **Reproduction Steps**
-(list of steps)
-1. step 1
-2. step 2
+
+1. did this
+2. then that
+3. followed by this (screenshots / video captures always help)
 
 **Expected Results**
-(what you expected the steps to produce)
+
+What you expected to happen.
 
 **Actual Results**
-(what actually was produced by the app)
 
-Screenshots are always helpful with issues. 
-
+What actually happened. (screenshots / video captures always help)
 
 ## Contributing
-
-All contributions greatly appreciated and welcome! If you would first like to sound out your contribution ideas please post your thoughts to our community (http://community.risevision.com), otherwise submit a pull request and we will do our best to incorporate it
-
-### Languages
-
-In order to support languages i18n needs to be added to this repository.  Please refer to our Suggested Contributions.
+All contributions are greatly appreciated and welcome! If you would first like to sound out your contribution ideas please post your thoughts to our [community](http://community.risevision.com), otherwise submit a pull request and we will do our best to incorporate it
 
 ### Suggested Contributions
-
 * Add a load spinner for when clicking on the Execute button. 
 
-* Add the user emails inside brackets on the header besides the username.
-
 ## Resources
-
 If you have any questions or problems please don't hesitate to join our lively and responsive community at http://community.risevision.com.
 
 If you are looking for user documentation on Rise Vision please see http://www.risevision.com/help/users/
 
 If you would like more information on developing applications for Rise Vision please visit http://www.risevision.com/help/developers/. 
 
-Facilitators: [Alexey Konovalov](https://github.com/alexey-rise "Alexey Konovalov") & [Rodrigo Serviuc Pavezi](https://github.com/rodrigopavezi "Rodrigo Serviuc Pavezi")
+
+
+
+**Facilitator**
+
+[Alexey Konovalov](https://github.com/alexey-rise "Alexey Konovalov") & [Rodrigo Serviuc Pavezi](https://github.com/rodrigopavezi "Rodrigo Serviuc Pavezi")
