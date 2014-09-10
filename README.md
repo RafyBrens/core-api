@@ -140,4 +140,4 @@ If you would like more information on developing applications for Rise Vision pl
 
 **Facilitator**
 
-[Alexey Konovalov](https://github.com/alexey-rise "Alexey Konovalov") & [Rodrigo Serviuc Pavezi](https://github.com/rodrigopavezi "Rodrigo Serviuc Pavezi")
+[Rodrigo Serviuc Pavezi](https://github.com/rodrigopavezi "Rodrigo Serviuc Pavezi")
