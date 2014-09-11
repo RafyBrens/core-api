@@ -48,9 +48,10 @@ function makeOAuth2Request() {
 
     request.execute(function (resp) {
         if (!resp.code) {
+            console.log(resp);
             // User is signed in, so hide the button
             document.getElementById('signinButton').style.visibility = 'hidden';
-            document.getElementById('signinText').innerText = 'Welcome ' + resp.name;
+            document.getElementById('signinText').innerText = 'Welcome ' + resp.name + ' [' + resp.email + ']';
         }
         else {
             document.getElementById('signinButton').style.visibility = 'visible';

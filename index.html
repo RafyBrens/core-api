@@ -6,6 +6,7 @@
     <script src="javascript/auth.js"></script>
     <script src="javascript/output.js"></script>
     <script src="javascript/navigation.js"></script>
+    <script src="http://fgnass.github.io/spin.js/spin.min.js"></script>
     <script type="text/javascript">
 
         // ------------------------- Authentication & Loading ----------------------------
@@ -21,11 +22,11 @@
 
             // ------------------------ Handles the submit event -------------------------
             document.getElementById('listCompany').onclick = function () {
-                reset("listCompanyResult");
+                handleExecuteAction("listCompanyResult");
                 listCompany();
             };
             document.getElementById('getCompany').onclick = function () {
-                reset("getCompanyResult");
+                handleExecuteAction("getCompanyResult");
                 getCompany();
             };
         }
@@ -300,11 +301,13 @@
                             </div>
                         </form>
                     </div>
-                    <div class="row responsePanel" id="getCompanyResult">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Response</div>
-                                <div class="panel-body result" id="getCompanyResultArea">
+                    <div id="getCompanyResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="getCompanyResultArea">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -373,11 +376,13 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="row responsePanel" id="listCompanyResult">
-                            <div class="col-md-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Response</div>
-                                    <div class="panel-body result" id="listCompanyResultArea">
+                        <div id="listCompanyResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="listCompanyResultArea">
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -4,18 +4,24 @@
  * Created by rodrigopavezi on 05/09/14.
  */
 
+
+var spinner;
+
 // ------------------------- Format Output ----------------------------
 /**
  * Create the pre element for the output.
+ *
  * @param inp
  * @param div
  */
+
 function output(inp, div) {
 
     var responsePanel = document.getElementById(div);
     responsePanel.querySelector(".result").appendChild(document.createElement('pre')).innerHTML = inp;
 
-    responsePanel.style.display = "block";
+    responsePanel.querySelector(".responsePanel").style.display = "block";
+    spinner.stop();
 }
 
 /**
@@ -43,13 +49,62 @@ function syntaxHighlight(json) {
 }
 
 /**
- * Reset the result output div
+ * Reset the result output div.
  *
  * @param div
  */
-function reset(div){
-    var _resultElement = document.getElementById(div).querySelector(".result");
+function reset(responsePanel){
+    var _resultElement = responsePanel.querySelector(".result");
     if(_resultElement){
         _resultElement.innerHTML = "";
     }
+}
+
+/**
+ * This function will create a spinner
+ * to be show when an api call is made.
+ *
+ * @param responsePanel
+ */
+function showSpinner(responsePanel){
+
+    spinner = new Spinner(getDefaultSpinnerOptions()).spin(responsePanel);
+
+}
+
+/**
+ * This function handles the execute action, thus,
+ * cleaning the result section, hiding the response panel
+ * and showing the spinner.
+ *
+ * @param div
+ */
+function handleExecuteAction(div){
+    var responsePanel = document.getElementById(div);
+    reset(responsePanel);
+    responsePanel.querySelector(".responsePanel").style.display = "none";
+    showSpinner(responsePanel);
+}
+
+function getDefaultSpinnerOptions(){
+    var _defaultSpinnerOptions = {
+        lines: 12, // The number of lines to draw
+        length: 20, // The length of each line
+        width: 10, // The line thickness
+        radius: 30, // The radius of the inner circle
+        corners: 1, // Corner roundness (0..1)
+        rotate: 0, // The rotation offset
+        direction: 1, // 1: clockwise, -1: counterclockwise
+        color: "#555", // #rgb or #rrggbb or array of colors
+        speed: 1, // Rounds per second
+        trail: 60, // Afterglow percentage
+        shadow: false, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        className: "spinner", // The CSS class to assign to the spinner
+        zIndex: 2e9, // The z-index (defaults to 2000000000)
+        top: "100%", // Top position relative to parent in px
+        left: "50%" // Left position relative to parent in px
+    };
+
+    return _defaultSpinnerOptions;
 }
