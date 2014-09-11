@@ -25,7 +25,7 @@ pre {
     color: red;
 }
 
-.breadcrumb{
+.breadcrumb {
     padding: 0px;
 }
 
@@ -33,15 +33,14 @@ a[disabled] {
     pointer-events: none;
 }
 
-
-.content-body{
-   margin-left: 15px;
+.content-body {
+    margin-left: 15px;
 }
 
 /*#signinText {
     font-size: 14px;
 }
 */
-#getCompanySection, #listCompanySection, .responsePanel {
+.callSection, .responsePanel {
     display: none;
 }

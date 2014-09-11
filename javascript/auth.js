@@ -14,17 +14,24 @@
  * which comes from an app created on Google App Engine.
  * Then, the client id is configured with a javascript origin attribute.This tights
  * a client id with the domain url of the server which the Google JavaScript Client API runs.
- * Below there is two client ids: the first one, which is comment out,
- * has the javacript origin attribute setup to http://localhost; the second is setup to
- * the github page.
  *
  * @type {string}
  */
 
-// When developing locally you can use the below client id as it has configured http://localhost as the origin of javascript calls.
-// Just uncomment the first and comment out the second
-//var CLIENT_ID = '1078646427254-mb590bbaki7a6qlr7rsoq2cc76rn0d42.apps.googleusercontent.com'; //CLIENT_ID for local development
-var CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleusercontent.com'; // CLIENT_ID for github pages
+var DEV_DOMAIN = "localhost";
+var STAGE_DOMAIN = "rodrigopavezi.github.io";
+var PROD_DOMAIN = "rise-vision.github.io";
+
+// This checks which CLIENT_ID to use based on the domain.
+var CLIENT_ID = "";
+if(location.hostname == DEV_DOMAIN){
+    CLIENT_ID = '1078646427254-mb590bbaki7a6qlr7rsoq2cc76rn0d42.apps.googleusercontent.com'; //CLIENT_ID for local development
+}else if(location.hostname == STAGE_DOMAIN) {
+    CLIENT_ID = '1039315471777-q6nuamfhek5r963vtag5t1h8k5pvos9p.apps.googleusercontent.com'; //CLIENT_ID for stage environment
+}else if(location.hostname == PROD_DOMAIN) {
+    CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleusercontent.com'; // CLIENT_ID for github pages
+}
+
 var SCOPES = 'https://www.googleapis.com/auth/userinfo.email';
 var ROOT = 'https://rvacore-test.appspot.com/_ah/api';
 var API_NAME = 'core';
