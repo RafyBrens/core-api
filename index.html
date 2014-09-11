@@ -53,6 +53,26 @@
             handleExecuteAction("listDisplayResult");
             listDisplay();
         };
+        document.getElementById('addSchedule').onclick = function () {
+            handleExecuteAction("addScheduleResult");
+            addSchedule();
+        };
+        document.getElementById('deleteSchedule').onclick = function () {
+            handleExecuteAction("deleteScheduleResult");
+            deleteSchedule();
+        };
+        document.getElementById('getSchedule').onclick = function () {
+            handleExecuteAction("getScheduleResult");
+            getSchedule();
+        };
+        document.getElementById('listSchedule').onclick = function () {
+            handleExecuteAction("listScheduleResult");
+            listSchedule();
+        };
+        document.getElementById('updateSchedule').onclick = function () {
+            handleExecuteAction("updateScheduleResult");
+            updateSchedule();
+        };
     }
 
 
@@ -310,6 +330,155 @@
         }, ROOT);
     }
 
+    function addSchedule() {
+        console.log('addSchedule');
+        // getting parameter values
+        var _data = document.getElementById('addSchedule_data').value;
+        var _companyId = document.getElementById('addSchedule_companyId').value;
+        var _fields = document.getElementById('addSchedule_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_companyId) {
+            parameters['companyId'] = _companyId;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.schedule.add(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'addScheduleResult');
+            });
+        }, ROOT);
+    }
+
+
+    function deleteSchedule() {
+        console.log('deleteSchedule');
+        // getting parameter values
+        var _id = document.getElementById('deleteSchedule_id').value;
+        var _fields = document.getElementById('deleteSchedule_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.schedule.delete(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'deleteScheduleResult');
+            });
+        }, ROOT);
+    }
+
+    function getSchedule() {
+        console.log('getSchedule');
+        // getting parameter values
+        var _id = document.getElementById('getSchedule_id').value;
+        var _fields = document.getElementById('getSchedule_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.schedule.get(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'getScheduleResult');
+            });
+        }, ROOT);
+    }
+
+    function listSchedule() {
+        console.log('listSchedule');
+        // getting parameters values
+        var _companyId = document.getElementById('listSchedule_companyId').value;
+        var _count = document.getElementById('listSchedule_count').value;
+        var _cursor = document.getElementById('listSchedule_cursor').value;
+        var _search = document.getElementById('listSchedule_search').value;
+        var _sort = document.getElementById('listSchedule_sort').value;
+        var _fields = document.getElementById('listSchedule_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_companyId) {
+            parameters['companyId'] = _companyId
+        }
+        if (_count) {
+            parameters['count'] = _count
+        }
+        if (_cursor) {
+            parameters['cursor'] = _cursor
+        }
+        if (_search) {
+            parameters['search'] = _search
+        }
+        if (_sort) {
+            parameters['sort'] = _sort
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.schedule.list(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listScheduleResult');
+            });
+        }, ROOT);
+    }
+
+    function updateSchedule() {
+        console.log('updateSchedule');
+        // getting parameter values
+        var _data = document.getElementById('updateSchedule_data').value;
+        var _id = document.getElementById('updateSchedule_id').value;
+        var _fields = document.getElementById('updateSchedule_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.schedule.update(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'updateScheduleResult');
+            });
+        }, ROOT);
+    }
 
     /**
      * This functions handles the response of the api call
@@ -418,34 +587,29 @@
                             </tr>
                             <!-------------------------------- Schedule calls --------------------------------------->
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','addScheduleSection');" disabled="disabled"
-                                       class="text-muted">core.schedule.add</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','addScheduleSection');">core.schedule.add</a></td>
                                 <td><span class="description">Add a schedule</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','deleteScheduleSection');" disabled="disabled"
-                                       class="text-muted">core.schedule.delete</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','deleteScheduleSection');">core.schedule.delete</a></td>
                                 <td><span class="description">Delete a schedule</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','getScheduleSection');" disabled="disabled"
-                                       class="text-muted">core.schedule.get</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','getScheduleSection');">core.schedule.get</a></td>
                                 <td><span class="description">Get a schedule</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','listScheduleSection');" disabled="disabled"
-                                       class="text-muted">core.schedule.list</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','listScheduleSection');">core.schedule.list</a></td>
                                 <td><span class="description">List schedules</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updateScheduleSection');" disabled="disabled"
-                                       class="text-muted">core.schedule.update</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','updateScheduleSection');">core.schedule.update</a></td>
                                 <td><span class="description">Update a schedule</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <!-------------------------------- Systemmessage calls --------------------------------------->
                             <tr>
@@ -948,6 +1112,300 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- html elements for core.schedule.add -->
+                    <div id="addScheduleSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('addScheduleSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.schedule.add</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="addSchedule_data" class="col-sm-2 control-label">Data</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addSchedule_data" placeholder="">
+                                        <span class="description">Json object with pair key value of the company's fields (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="addSchedule_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addSchedule_companyId" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addSchedule_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="addSchedule" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="addScheduleResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="addScheduleResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.company.delete -->
+                    <div id="deleteScheduleSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('deleteScheduleSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.schedule.delete</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="deleteSchedule_id" class="col-sm-2 control-label">Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="deleteSchedule_id" placeholder="">
+                                        <span class="description">The Id of the Schedule (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="deleteSchedule_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="deleteSchedule" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="deleteScheduleResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="deleteScheduleResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.schedule.get -->
+                    <div id="getScheduleSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('getScheduleSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.schedule.get</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="getSchedule_id" class="col-sm-2 control-label">Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="getSchedule_id" placeholder="">
+                                        <span class="description">The Id of the Schedule (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="getSchedule_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="getSchedule" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="getScheduleResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="getScheduleResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.schedule.list !-->
+                    <div id="listScheduleSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('listScheduleSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.schedule.list</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="listSchedule_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSchedule_companyId" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSchedule_count" class="col-sm-2 control-label">Count</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSchedule_count" placeholder="">
+                                        <span class="description">Max number of results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSchedule_cursor" class="col-sm-2 control-label">Cursor</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSchedule_cursor" placeholder="">
+                                        <span class="description">?? (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSchedule_search" class="col-sm-2 control-label">Search</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSchedule_search" placeholder="">
+                                        <span class="description">Search query (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSchedule_sort" class="col-sm-2 control-label">Sort</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSchedule_sort" placeholder="">
+                                        <span class="description">Field and direction to sort the results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSchedule_fields" class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSchedule_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="listSchedule" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="listScheduleResult">
+                                <div class="row responsePanel">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Response</div>
+                                            <div class="panel-body result" id="listScheduleResultArea">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.schedule.update -->
+                    <div id="updateScheduleSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('updateScheduleSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.schedule.update</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="updateSchedule_data" class="col-sm-2 control-label">Data</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateSchedule_data" placeholder="">
+                                        <span class="description">Json object with pair key value of the company's fields (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateSchedule_id" class="col-sm-2 control-label">Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateSchedule_id" placeholder="">
+                                        <span class="description">The Id of the Schedule (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateSchedule_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="updateSchedule" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="updateScheduleResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="updateScheduleResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
