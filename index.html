@@ -193,13 +193,17 @@
     function moveCompany() {
         console.log('moveCompany');
         // getting parameter values
-        var _authKey = document.getElementById('moveCompany_authKey').value;
+        var _id = document.getElementById('moveCompany_id').value;
+        var _newParentId = document.getElementById('moveCompany_newParentId').value;
         var _fields = document.getElementById('moveCompany_fields').value;
 
         // create a javascript object which will be converted to Json
         var parameters = {};
-        if (_authKey) {
-            parameters['authKey'] = _authKey;
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_newParentId) {
+            parameters['newParentId'] = _newParentId;
         }
         if (_fields) {
             parameters['fields'] = _fields;
@@ -725,15 +729,24 @@
                         <div>
                             <form class="form-horizontal form" action="javascript:void(0);">
                                 <div class="form-group">
-                                    <label for="moveCompany_authKey" class="col-sm-2 control-label">authKey</label>
+                                    <label for="moveCompany_id" class="col-sm-2 control-label">Id</label>
 
                                     <div class="col-sm-10">
-                                        <input id="moveCompany_authKey" placeholder="">
-                                        <span class="description">The authkey of the Company (String)</span>
+                                        <input id="moveCompany_id" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="moveCompany_newParentId" class="col-sm-2 control-label">New Parent Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="moveCompany_newParentId" placeholder="">
+                                        <span class="description">The Id of the New Parent Company (String)</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Fields</label>
+
                                     <div class="col-sm-10">
                                         <input id="moveCompany_fields" placeholder="">
                                         <span class="description">Selector specifying which fields to include in a partial response</span>
