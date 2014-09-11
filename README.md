@@ -32,7 +32,7 @@ At this time Chrome is the only browser that this project and Rise Vision suppor
  
  The client id is configured with a javascript origin attribute.This tights up a client id with the domain url of the server in which the Google JavaScript Client API runs. 
  
- For instance, if I run the [interactive console](http://rise-vision.github.io/core-api/) on my local apache server. I will have to use a client id which the attribute javascript_origin is set to http://localhost.
+ For instance, if I run the [interactive console](http://rise-vision.github.io/core-api/) on my local apache server. I will have to use a client id which the attribute javascript_origin is set to http://localhost:8080.
 
 
 ### Local Development Environment Setup and Installation
@@ -94,12 +94,12 @@ var CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleuserc
 * Go to "Run Client" section in readme to see how to run this app.
 
 ### Run Client
- To run the application you will need to deploy it to a web server such as the Apache Http Server. It must be configured to serve the application on http://localhost. 
+ To run the application you will need to deploy it to a web server such as the Apache Http Server. It must be configured to serve the application on http://localhost:8080. 
  We will not explain here how to setup such server. We consider you already know how to do that. 
 
 * deploy the application to the web server
 
-* application should be running on [http://localhost](http://localhost)
+* application should be running on [http://localhost:8080](http://localhost:8080)
 
 ### Dependencies
 
