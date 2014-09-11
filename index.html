@@ -9,179 +9,384 @@
     <script src="http://fgnass.github.io/spin.js/spin.min.js"></script>
     <script type="text/javascript">
 
-        // ------------------------- Authentication & Loading ----------------------------
-        function init() {
-            console.log('init');
+    // ------------------------- Authentication & Loading ----------------------------
+    function init() {
+        console.log('init');
 
-            signin(true, handleAuth); // tries to authenticate the user during loading. See auth.js file
+        signin(true, handleAuth); // tries to authenticate the user during loading. See auth.js file
 
-            document.getElementById('signinButton').onclick = function () {
-                console.log('login button clicked');
-                signin(false, handleAuth); // more details in the auth.js file
-            };
+        document.getElementById('signinButton').onclick = function () {
+            console.log('login button clicked');
+            signin(false, handleAuth); // more details in the auth.js file
+        };
 
-            // ------------------------ Handles the submit event -------------------------
-            document.getElementById('listCompany').onclick = function () {
-                handleExecuteAction("listCompanyResult");
-                listCompany();
-            };
-            document.getElementById('getCompany').onclick = function () {
-                handleExecuteAction("getCompanyResult");
-                getCompany();
-            };
+        // ------------------------ Handles the submit event -------------------------
+        document.getElementById('addCompany').onclick = function () {
+            handleExecuteAction("addCompanyResult");
+            addCompany();
+        };
+        document.getElementById('deleteCompany').onclick = function () {
+            handleExecuteAction("deleteCompanyResult");
+            deleteCompany();
+        };
+        document.getElementById('getCompany').onclick = function () {
+            handleExecuteAction("getCompanyResult");
+            getCompany();
+        };
+        document.getElementById('listCompany').onclick = function () {
+            handleExecuteAction("listCompanyResult");
+            listCompany();
+        };
+        document.getElementById('moveCompany').onclick = function () {
+            handleExecuteAction("moveCompanyResult");
+            moveCompany();
+        };
+        document.getElementById('updateCompany').onclick = function () {
+            handleExecuteAction("updateCompanyResult");
+            updateCompany();
+        };
+        document.getElementById('getDisplay').onclick = function () {
+            handleExecuteAction("getDisplayResult");
+            getDisplay();
+        };
+        document.getElementById('listDisplay').onclick = function () {
+            handleExecuteAction("listDisplayResult");
+            listDisplay();
+        };
+    }
+
+
+    function addCompany() {
+        console.log('addCompany');
+        // getting parameter values
+        var _data = document.getElementById('addCompany_data').value;
+        var _parentId = document.getElementById('addCompany_parentId').value;
+        var _fields = document.getElementById('addCompany_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_parentId) {
+            parameters['parentId'] = _parentId;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
         }
 
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.company.add(parameters);
 
-        /**
-         *  This function loads the api to make the request.
-         */
-        function getCompany() {
-            console.log('getCompany');
-            gapi.client.load(API_NAME, API_VER, makeCompanyRequest, ROOT);
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'addCompanyResult');
+            });
+        }, ROOT);
+    }
 
+
+    function deleteCompany() {
+        console.log('deleteCompany');
+        // getting parameter values
+        var _id = document.getElementById('deleteCompany_id').value;
+        var _fields = document.getElementById('deleteCompany_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
         }
 
-        /**
-         * This function gets the fields values from the form and
-         * call the api using the google javascript api(gapi)
-         */
-        function makeCompanyRequest(){
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.company.delete(parameters);
 
-            // getting parameter values
-            var _id = document.getElementById('getCompany_id').value;
-            var _fields = document.getElementById('getCompany_fields').value;
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'deleteCompanyResult');
+            });
+        }, ROOT);
+    }
 
-            // create a javascript object which will be converted to Json
-            var parameters = {};
-            if (_id) {
-                parameters['id'] = _id
-            }
-            if (_fields) {
-                parameters['fields'] = _fields
-            }
 
-            // calling the api passing the parameter object
-            var request = gapi.client.core.company.get(parameters);
+    /**
+     *  This function loads the api to make the request.
+     */
+    function getCompany() {
+        console.log('getCompany');
+        gapi.client.load(API_NAME, API_VER, makeCompanyRequest, ROOT);
 
-            // jsonResp object has got a duplication of the data which comes under result element
-            request.execute(function (jsonResp,rawResp) {
-                handlesResponse(jsonResp,rawResp,'getCompanyResult');
-            })
+    }
+
+    /**
+     * This function gets the fields values from the form and
+     * call the api using the google javascript api(gapi)
+     */
+    function makeCompanyRequest() {
+
+        // getting parameter values
+        var _id = document.getElementById('getCompany_id').value;
+        var _fields = document.getElementById('getCompany_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
         }
 
-        function listCompany() {
-            console.log('listCompany');
-            // getting parameters values
-            var _companyId = document.getElementById('listCompany_companyId').value;
-            var _count = document.getElementById('listCompany_count').value;
-            var _cursor = document.getElementById('listCompany_cursor').value;
-            var _search = document.getElementById('listCompany_search').value;
-            var _sort = document.getElementById('listCompany_sort').value;
-            var _fields = document.getElementById('listCompany_fields').value;
+        // calling the api passing the parameter object
+        var request = gapi.client.core.company.get(parameters);
 
-            // create a javascript object which will be converted to Json
-            var parameters = {};
-            if (_companyId) {
-                parameters['companyId'] = _companyId
-            }
-            if (_count) {
-                parameters['count'] = _count
-            }
-            if (_cursor) {
-                parameters['cursor'] = _cursor
-            }
-            if (_search) {
-                parameters['search'] = _search
-            }
-            if (_sort) {
-                parameters['sort'] = _sort
-            }
-            if (_fields) {
-                parameters['fields'] = _fields
-            }
+        // jsonResp object has got a duplication of the data which comes under result element
+        request.execute(function (jsonResp, rawResp) {
+            handlesResponse(jsonResp, rawResp, 'getCompanyResult');
+        })
+    }
 
-            // loading and calling the api passing the parameter object
-            gapi.client.load(API_NAME, API_VER, function () {
-                request = gapi.client.core.company.list(parameters);
+    function listCompany() {
+        console.log('listCompany');
+        // getting parameters values
+        var _companyId = document.getElementById('listCompany_companyId').value;
+        var _count = document.getElementById('listCompany_count').value;
+        var _cursor = document.getElementById('listCompany_cursor').value;
+        var _search = document.getElementById('listCompany_search').value;
+        var _sort = document.getElementById('listCompany_sort').value;
+        var _fields = document.getElementById('listCompany_fields').value;
 
-                request.execute(function (jsonResp,rawResp) {
-                    handlesResponse(jsonResp,rawResp,'listCompanyResult');
-                  });
-            }, ROOT);
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_companyId) {
+            parameters['companyId'] = _companyId
+        }
+        if (_count) {
+            parameters['count'] = _count
+        }
+        if (_cursor) {
+            parameters['cursor'] = _cursor
+        }
+        if (_search) {
+            parameters['search'] = _search
+        }
+        if (_sort) {
+            parameters['sort'] = _sort
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
         }
 
-        /**
-         * This functions handles the response of the api call
-         * It checks if there is a valida result and
-         * sends the json to the output function
-         *
-         * @param jsonResp
-         * @param rawResp
-         */
-        function handlesResponse(jsonResp,rawResp,type){
-            console.log(jsonResp);
-            // Because of the way the GAPI works the jsonResp object has got
-            // a duplication of the data which comes under result element
-            // So here we will output the result to avoid it if there is one.
-            // There is the error case so result element would not exist on the json responce
-            var resultJson = (jsonResp.result)? jsonResp.result: jsonResp;
-            var jsonData = JSON.stringify(resultJson, undefined, 2);
-            output(syntaxHighlight(jsonData),type); // see output.js
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.company.list(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listCompanyResult');
+            });
+        }, ROOT);
+    }
+
+    function moveCompany() {
+        console.log('moveCompany');
+        // getting parameter values
+        var _id = document.getElementById('moveCompany_id').value;
+        var _newParentId = document.getElementById('moveCompany_newParentId').value;
+        var _fields = document.getElementById('moveCompany_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
         }
+        if (_newParentId) {
+            parameters['newParentId'] = _newParentId;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.company.move(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'moveCompanyResult');
+            });
+        }, ROOT);
+    }
+
+    function updateCompany() {
+        console.log('updateCompany');
+        // getting parameter values
+        var _data = document.getElementById('updateCompany_data').value;
+        var _id = document.getElementById('updateCompany_id').value;
+        var _fields = document.getElementById('updateCompany_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.company.update(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'updateCompanyResult');
+            });
+        }, ROOT);
+    }
+
+    function getDisplay() {
+        console.log('getDisplay');
+        // getting parameter values
+        var _id = document.getElementById('getDisplay_id').value;
+        var _fields = document.getElementById('getDisplay_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.display.get(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'getDisplayResult');
+            });
+        }, ROOT);
+    }
+
+    function listDisplay() {
+        console.log('listDisplay');
+        // getting parameters values
+        var _companyId = document.getElementById('listDisplay_companyId').value;
+        var _count = document.getElementById('listDisplay_count').value;
+        var _cursor = document.getElementById('listDisplay_cursor').value;
+        var _search = document.getElementById('listDisplay_search').value;
+        var _sort = document.getElementById('listDisplay_sort').value;
+        var _fields = document.getElementById('listDisplay_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_companyId) {
+            parameters['companyId'] = _companyId
+        }
+        if (_count) {
+            parameters['count'] = _count
+        }
+        if (_cursor) {
+            parameters['cursor'] = _cursor
+        }
+        if (_search) {
+            parameters['search'] = _search
+        }
+        if (_sort) {
+            parameters['sort'] = _sort
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.display.list(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listDisplayResult');
+            });
+        }, ROOT);
+    }
+
+
+    /**
+     * This functions handles the response of the api call
+     * It checks if there is a valida result and
+     * sends the json to the output function
+     *
+     * @param jsonResp
+     * @param rawResp
+     * @param type
+     */
+    function handlesResponse(jsonResp, rawResp, type) {
+        console.log(jsonResp);
+        // Because of the way the GAPI works the jsonResp object has got
+        // a duplication of the data which comes under result element
+        // So here we will output the result to avoid it if there is one.
+        // There is the error case so result element would not exist on the json responce
+        var resultJson = (jsonResp.result) ? jsonResp.result : jsonResp;
+        var jsonData = JSON.stringify(resultJson, undefined, 2);
+        output(syntaxHighlight(jsonData), type); // see output.js
+    }
     </script>
     <script src="https://apis.google.com/js/client.js?onload=init"></script>
     <link rel="stylesheet" href="css/rise.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-<div id="content" class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-12 content-header">
-                <!-- Navbar on the header of the console application-->
-                <nav class="navbar navbar-default" role="navigation">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <span class="navbar-brand"><img src="http://s3.amazonaws.com/rise-common/images/logo-small.png"> &nbsp;&nbsp;API Console</span>
-                            <span id="signinText" class="navbar-text">Authorize requests using OAuth 2.0:</span>
-                            <!--button id="signinButton" type="button" class="btn btn-primary btn-fixed-width navbar-btn">
+    <div id="content" class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 content-header">
+                    <!-- Navbar on the header of the console application-->
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <span class="navbar-brand"><img src="http://s3.amazonaws.com/rise-common/images/logo-small.png"> &nbsp;&nbsp;API Console</span>
+                                <span id="signinText" class="navbar-text">Authorize requests using OAuth 2.0:</span>
+                                <!--button id="signinButton" type="button" class="btn btn-primary btn-fixed-width navbar-btn">
+                                    Sign in <i class="fa fa fa-white fa-sign-in icon-right"></i>
+                                </button-->
+                            </div>
+                            <button id="signinButton" type="button" class="btn btn-primary btn-fixed-width navbar-btn">
                                 Sign in <i class="fa fa fa-white fa-sign-in icon-right"></i>
-                            </button-->
+                            </button>
+                            <a type="button" class="btn btn-rv-help btn-fixed-width navbar-right"
+                               href="https://github.com/Rise-Vision/core-api" target="_blank">
+                                Contribute <i class="fa fa-github fa-lg "></i>
+                            </a>
                         </div>
-                        <button id="signinButton" type="button" class="btn btn-primary btn-fixed-width navbar-btn">
-                            Sign in <i class="fa fa fa-white fa-sign-in icon-right"></i>
-                        </button>
-                        <a type="button" class="btn btn-rv-help btn-fixed-width navbar-right" href="https://github.com/Rise-Vision/core-api" target="_blank">
-                            Contribute <i class="fa fa-github fa-lg "></i>
-                        </a>
-                    </div>
-                </nav>
-                </nav>
+                    </nav>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
 
                 <!-- Table with all functions -->
-                <div id="listOfFunctions">
-                    <div>
-                        <ol class="breadcrumb">
-                            <li class="active">Core API</li>
-                        </ol>
-                    </div>
-                    <table class="table table-condensed">
-                        <tbody>
+                    <div id="listOfFunctions">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li class="active">Core API</li>
+                            </ol>
+                        </div>
+                        <table class="table table-condensed">
+                            <tbody>
                             <!-------------------------------- Company calls --------------------------------------->
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','addCompanySection');" disabled="disabled" class="text-muted">core.company.add</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','addCompanySection');">core.company.add</a></td>
                                 <td><span class="description">Add a company</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','deleteCompanySection');" disabled="disabled" class="text-muted">core.company.delete</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','deleteCompanySection');">core.company.delete</a></td>
                                 <td><span class="description">Delete a company</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','getCompanySection');">core.company.get</a></td>
@@ -195,193 +400,561 @@
                                 <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','moveCompanySection');" disabled="disabled" class="text-muted">core.company.move</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','moveCompanySection');">core.company.move</a></td>
                                 <td><span class="description">Move a company</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updateCompanySection');" disabled="disabled" class="text-muted">core.company.update</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','updateCompanySection');">core.company.update</a></td>
                                 <td><span class="description">Update a company</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <!-------------------------------- Display calls --------------------------------------->
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','getDisplaySection');" disabled="disabled" class="text-muted">core.display.get</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','getDisplaySection');">core.display.get</a></td>
                                 <td><span class="description">Get a display</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','listDisplaySection');" disabled="disabled" class="text-muted">core.display.list</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','listDisplaySection');">core.display.list</a></td>
                                 <td><span class="description">List displays</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <!-------------------------------- Schedule calls --------------------------------------->
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','addScheduleSection');" disabled="disabled" class="text-muted">core.schedule.add</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','addScheduleSection');" disabled="disabled"
+                                       class="text-muted">core.schedule.add</a></td>
                                 <td><span class="description">Add a schedule</span></td>
                                 <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','deleteScheduleSection');" disabled="disabled" class="text-muted">core.schedule.delete</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','deleteScheduleSection');" disabled="disabled"
+                                       class="text-muted">core.schedule.delete</a></td>
                                 <td><span class="description">Delete a schedule</span></td>
                                 <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','getScheduleSection');" disabled="disabled" class="text-muted">core.schedule.get</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','getScheduleSection');" disabled="disabled"
+                                       class="text-muted">core.schedule.get</a></td>
                                 <td><span class="description">Get a schedule</span></td>
                                 <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','listScheduleSection');" disabled="disabled" class="text-muted">core.schedule.list</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','listScheduleSection');" disabled="disabled"
+                                       class="text-muted">core.schedule.list</a></td>
                                 <td><span class="description">List schedules</span></td>
                                 <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updateScheduleSection');" disabled="disabled" class="text-muted">core.schedule.update</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','updateScheduleSection');" disabled="disabled"
+                                       class="text-muted">core.schedule.update</a></td>
                                 <td><span class="description">Update a schedule</span></td>
                                 <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
                             <!-------------------------------- Systemmessage calls --------------------------------------->
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','listSystemmessageSection');" disabled="disabled" class="text-muted">core.systemmessage.list</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','listSystemmessageSection');" disabled="disabled"
+                                       class="text-muted">core.systemmessage.list</a></td>
                                 <td><span class="description">List Systemmessage</span></td>
                                 <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
                             <!-------------------------------- User calls --------------------------------------->
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','getUserSection');" disabled="disabled" class="text-muted">core.user.get</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','getUserSection');" disabled="disabled"
+                                       class="text-muted">core.user.get</a></td>
                                 <td><span class="description">Get a user</span></td>
                                 <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','listUserSection');" disabled="disabled" class="text-muted">core.user.list</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','listUserSection');" disabled="disabled"
+                                       class="text-muted">core.user.list</a></td>
                                 <td><span class="description">List users</span></td>
                                 <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updateUserSection');" disabled="disabled" class="text-muted">core.user.update</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','updateUserSection');" disabled="disabled"
+                                       class="text-muted">core.user.update</a></td>
                                 <td><span class="description">Update a user</span></td>
                                 <td><span class="label label-info">Coming soon!!!</span></td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
 
-                <!-- html elements for core.company.get -->
-                <div id="getCompanySection">
-                    <div>
-                        <ol class="breadcrumb">
-                            <li><a href="javascript:navigate('getCompanySection','listOfFunctions');">Core API</a></li>
-                            <li class="active">core.company.get</li>
-                        </ol>
-                    </div>
-                    <div>
-                        <form class="form-horizontal form" action="javascript:void(0);">
-                            <div class="form-group">
-                                <label for="getCompany_id" class="col-sm-2 control-label">Id</label>
-                                <div class="col-sm-10">
-                                    <input id="getCompany_id" placeholder="">
-                                    <span class="description">The ID of the Company (String)</span>
+                    <!-- html elements for core.company.add -->
+                    <div id="addCompanySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('addCompanySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.company.add</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="addCompany_data" class="col-sm-2 control-label">Data</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addCompany_data" placeholder="">
+                                        <span class="description">Json object with pair key value of the company's fields (String)</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Fields</label>
-                                <div class="col-sm-10">
-                                    <input id="getCompany_fields" placeholder="">
-                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                <div class="form-group">
+                                    <label for="addCompany_parentId" class="col-sm-2 control-label">Parent Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addCompany_parentId" placeholder="">
+                                        <span class="description">The Id of the Parent Company (String)</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button id="getCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
-                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
-                                        Execute <i class="fa fa-white fa-check icon-right"></i>
-                                    </button>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addCompany_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="getCompanyResult">
-                        <div class="row responsePanel">
-                            <div class="col-md-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">Response</div>
-                                    <div class="panel-body result" id="getCompanyResultArea">
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="addCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="addCompanyResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="addCompanyResultArea">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                    <!-- html elements for core.company.delete -->
+                    <div id="deleteCompanySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('deleteCompanySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.company.delete</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="deleteCompany_id" class="col-sm-2 control-label">Id</label>
 
-                <!-- html elements for core.company.list !-->
-                <div id="listCompanySection">
-                    <div>
-                        <ol class="breadcrumb">
-                            <li><a href="javascript:navigate('listCompanySection','listOfFunctions');">Core API</a></li>
-                            <li class="active">core.company.list</li>
-                        </ol>
-                    </div>
-                    <div>
-                        <form class="form-horizontal form" action="javascript:void(0);">
-                            <div class="form-group">
-                                <label for="listCompany_companyId" class="col-sm-2 control-label">Company Id</label>
-                                <div class="col-sm-10">
-                                    <input id="listCompany_companyId" placeholder="">
-                                    <span class="description">The ID of the Company (String)</span>
+                                    <div class="col-sm-10">
+                                        <input id="deleteCompany_id" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="listCompany_count" class="col-sm-2 control-label">Count</label>
-                                <div class="col-sm-10">
-                                    <input id="listCompany_count" placeholder="">
-                                    <span class="description">?? (String)</span>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="deleteCompany_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="listCompany_cursor" class="col-sm-2 control-label">Cursor</label>
-                                <div class="col-sm-10">
-                                    <input id="listCompany_cursor" placeholder="">
-                                    <span class="description">?? (String)</span>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="deleteCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="listCompany_search" class="col-sm-2 control-label">Search</label>
-                                <div class="col-sm-10">
-                                    <input id="listCompany_search" placeholder="">
-                                    <span class="description">?? (String)</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="listCompany_sort" class="col-sm-2 control-label">Sort</label>
-                                <div class="col-sm-10">
-                                    <input id="listCompany_sort" placeholder="">
-                                    <span class="description">?? (String)</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="listCompany_fields" class="col-sm-2 control-label">Fields</label>
-                                <div class="col-sm-10">
-                                    <input id="listCompany_fields" placeholder="">
-                                    <span class="description">Selector specifying which fields to include in a partial response</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button id="listCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
-                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
-                                        Execute <i class="fa fa-white fa-check icon-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        <div id="listCompanyResult">
+                            </form>
+                        </div>
+                        <div id="deleteCompanyResult">
                             <div class="row responsePanel">
                                 <div class="col-md-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Response</div>
-                                        <div class="panel-body result" id="listCompanyResultArea">
+                                        <div class="panel-body result" id="deleteCompanyResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.company.get -->
+                    <div id="getCompanySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('getCompanySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.company.get</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="getCompany_id" class="col-sm-2 control-label">Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="getCompany_id" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="getCompany_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="getCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="getCompanyResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="getCompanyResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- html elements for core.company.list !-->
+                    <div id="listCompanySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('listCompanySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.company.list</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="listCompany_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listCompany_companyId" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listCompany_count" class="col-sm-2 control-label">Count</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listCompany_count" placeholder="">
+                                        <span class="description">Max number of results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listCompany_cursor" class="col-sm-2 control-label">Cursor</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listCompany_cursor" placeholder="">
+                                        <span class="description">?? (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listCompany_search" class="col-sm-2 control-label">Search</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listCompany_search" placeholder="">
+                                        <span class="description">Search query (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listCompany_sort" class="col-sm-2 control-label">Sort</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listCompany_sort" placeholder="">
+                                        <span class="description">Field and direction to sort the results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listCompany_fields" class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listCompany_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="listCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="listCompanyResult">
+                                <div class="row responsePanel">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Response</div>
+                                            <div class="panel-body result" id="listCompanyResultArea">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.company.move -->
+                    <div id="moveCompanySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('moveCompanySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.company.move</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="moveCompany_id" class="col-sm-2 control-label">Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="moveCompany_id" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="moveCompany_newParentId" class="col-sm-2 control-label">New Parent Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="moveCompany_newParentId" placeholder="">
+                                        <span class="description">The Id of the New Parent Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="moveCompany_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="moveCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="moveCompanyResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="moveCompanyResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.company.update -->
+                    <div id="updateCompanySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('updateCompanySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.company.update</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="updateCompany_data" class="col-sm-2 control-label">Data</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateCompany_data" placeholder="">
+                                        <span class="description">Json object with pair key value of the company's fields (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateCompany_id" class="col-sm-2 control-label">Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateCompany_id" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateCompany_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="updateCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="updateCompanyResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="updateCompanyResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.display.get -->
+                    <div id="getDisplaySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('getDisplaySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.display.get</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="getDisplay_id" class="col-sm-2 control-label">Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="getDisplay_id" placeholder="">
+                                        <span class="description">The Id of the Display (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="getDisplay_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="getDisplay" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="getDisplayResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="getDisplayResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.display.list !-->
+                    <div id="listDisplaySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('listDisplaySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.display.list</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="listDisplay_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listDisplay_companyId" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listDisplay_count" class="col-sm-2 control-label">Count</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listDisplay_count" placeholder="">
+                                        <span class="description">Max number of results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listDisplay_cursor" class="col-sm-2 control-label">Cursor</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listDisplay_cursor" placeholder="">
+                                        <span class="description">?? (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listDisplay_search" class="col-sm-2 control-label">Search</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listDisplay_search" placeholder="">
+                                        <span class="description">Search query (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listDisplay_sort" class="col-sm-2 control-label">Sort</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listDisplay_sort" placeholder="">
+                                        <span class="description">Field and direction to sort the results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listDisplay_fields" class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listDisplay_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="listDisplay" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="listDisplayResult">
+                                <div class="row responsePanel">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Response</div>
+                                            <div class="panel-body result" id="listDisplayResultArea">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -392,7 +965,6 @@
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
 
