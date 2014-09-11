@@ -126,7 +126,8 @@ What actually happened. (screenshots / video captures always help)
 All contributions are greatly appreciated and welcome! If you would first like to sound out your contribution ideas please post your thoughts to our [community](http://community.risevision.com), otherwise submit a pull request and we will do our best to incorporate it
 
 ### Suggested Contributions
-* Add a load spinner for when clicking on the Execute button. 
+* Show the javascript code snippet which makes the api call besides the form.
+* Create a json editor so it can be used instead of filling out the form.
 
 ## Resources
 If you have any questions or problems please don't hesitate to join our lively and responsive community at http://community.risevision.com.
