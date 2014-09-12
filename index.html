@@ -6,6 +6,7 @@
     <script src="javascript/auth.js"></script>
     <script src="javascript/output.js"></script>
     <script src="javascript/navigation.js"></script>
+    <script src="javascript/sample_json.js"></script>
     <script src="http://fgnass.github.io/spin.js/spin.min.js"></script>
     <script type="text/javascript">
 
@@ -22,79 +23,79 @@
 
         // ------------------------ Handles the submit event -------------------------
         document.getElementById('addCompany').onclick = function () {
-            handleExecuteAction("addCompanyResult");
+            handleExecuteAction("addCompanySection");
             addCompany();
         };
         document.getElementById('deleteCompany').onclick = function () {
-            handleExecuteAction("deleteCompanyResult");
+            handleExecuteAction("deleteCompanySection");
             deleteCompany();
         };
         document.getElementById('getCompany').onclick = function () {
-            handleExecuteAction("getCompanyResult");
+            handleExecuteAction("getCompanySection");
             getCompany();
         };
         document.getElementById('listCompany').onclick = function () {
-            handleExecuteAction("listCompanyResult");
+            handleExecuteAction("listCompanySection");
             listCompany();
         };
         document.getElementById('moveCompany').onclick = function () {
-            handleExecuteAction("moveCompanyResult");
+            handleExecuteAction("moveCompanySection");
             moveCompany();
         };
         document.getElementById('updateCompany').onclick = function () {
-            handleExecuteAction("updateCompanyResult");
+            handleExecuteAction("updateCompanySection");
             updateCompany();
         };
         document.getElementById('getDisplay').onclick = function () {
-            handleExecuteAction("getDisplayResult");
+            handleExecuteAction("getDisplaySection");
             getDisplay();
         };
         document.getElementById('listDisplay').onclick = function () {
-            handleExecuteAction("listDisplayResult");
+            handleExecuteAction("listDisplaySection");
             listDisplay();
         };
         document.getElementById('addSchedule').onclick = function () {
-            handleExecuteAction("addScheduleResult");
+            handleExecuteAction("addScheduleSection");
             addSchedule();
         };
         document.getElementById('deleteSchedule').onclick = function () {
-            handleExecuteAction("deleteScheduleResult");
+            handleExecuteAction("deleteScheduleSection");
             deleteSchedule();
         };
         document.getElementById('getSchedule').onclick = function () {
-            handleExecuteAction("getScheduleResult");
+            handleExecuteAction("getScheduleSection");
             getSchedule();
         };
         document.getElementById('listSchedule').onclick = function () {
-            handleExecuteAction("listScheduleResult");
+            handleExecuteAction("listScheduleSection");
             listSchedule();
         };
         document.getElementById('updateSchedule').onclick = function () {
-            handleExecuteAction("updateScheduleResult");
+            handleExecuteAction("updateScheduleSection");
             updateSchedule();
         };
         document.getElementById('listSystemmessage').onclick = function () {
-            handleExecuteAction("listSystemmessageResult");
+            handleExecuteAction("listSystemmessageSection");
             listSystemmessage();
         };
         document.getElementById('addUser').onclick = function () {
-            handleExecuteAction("addUserResult");
+            handleExecuteAction("addUserSection");
             addUser();
         };
         document.getElementById('deleteUser').onclick = function () {
-            handleExecuteAction("deleteUserResult");
+            handleExecuteAction("deleteUserSection");
             deleteUser();
         };
         document.getElementById('getUser').onclick = function () {
-            handleExecuteAction("getUserResult");
+            handleExecuteAction("getUserSection");
             getUser();
         };
         document.getElementById('listUser').onclick = function () {
-            handleExecuteAction("listUserResult");
+            handleExecuteAction("listUserSection");
             listUser();
         };
         document.getElementById('updateUser').onclick = function () {
-            handleExecuteAction("updateUserResult");
+            handleExecuteAction("updateUserSection");
             updateUser();
         };
     }
@@ -888,7 +889,7 @@
                                     <label for="addCompany_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <input id="addCompany_data" placeholder="">
+                                        <textarea id="addCompany_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the company's fields (String)</span>
                                     </div>
                                 </div>
@@ -1182,7 +1183,7 @@
                                     <label for="updateCompany_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateCompany_data" placeholder="">
+                                        <textarea id="updateCompany_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the company's fields (String)</span>
                                     </div>
                                 </div>
@@ -1369,7 +1370,7 @@
                                     <label for="addSchedule_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <input id="addSchedule_data" placeholder="">
+                                        <textarea id="addSchedule_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the company's fields (String)</span>
                                     </div>
                                 </div>
@@ -1605,7 +1606,7 @@
                                     <label for="updateSchedule_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateSchedule_data" placeholder="">
+                                        <textarea id="updateSchedule_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the company's fields (String)</span>
                                     </div>
                                 </div>
@@ -1743,7 +1744,7 @@
                                     <label for="addUser_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <input id="addUser_data" placeholder="">
+                                        <textarea id="addUser_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the company's fields (String)</span>
                                     </div>
                                 </div>
@@ -1987,7 +1988,7 @@
                                     <label for="updateUser_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateUser_data" placeholder="">
+                                        <textarea id="updateUser_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the company's fields (String)</span>
                                     </div>
                                 </div>
