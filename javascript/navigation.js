@@ -7,13 +7,15 @@
 
 function navigate(from, to) {
 
-    var fromElement = document.getElementById(from);
-    fromElement.style.display = "none";
+    var _fromElement = document.getElementById(from);
+    var _toElement = document.getElementById(to);
+
+    _fromElement.style.display = "none";
     document.getElementById(to).style.display = "block";
 
-    var _formElement = fromElement.querySelector(".form");
-    var _resultElement = fromElement.querySelector(".result");
-    var _responsePanel = fromElement.querySelector(".responsePanel");
+    var _formElement = _fromElement.querySelector(".form");
+    var _resultElement = _fromElement.querySelector(".result");
+    var _responsePanel = _fromElement.querySelector(".responsePanel");
     if (_formElement) {
         _formElement.reset();
     }
@@ -24,5 +26,14 @@ function navigate(from, to) {
         _responsePanel.style.display = "none";
     }
 
+    loadSampleJsonIntoTextArea(_toElement);
+}
+
+
+function loadSampleJsonIntoTextArea(section){
+    var _dataTextArea = section.querySelector(".dataTextArea");
+    if (_dataTextArea) {
+        _dataTextArea.innerHTML = getSampleJson(_dataTextArea.id);
+    }
 }
 

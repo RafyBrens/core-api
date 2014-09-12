@@ -51,10 +51,10 @@ function syntaxHighlight(json) {
 /**
  * Reset the result output div.
  *
- * @param div
+ * @param section
  */
-function reset(responsePanel){
-    var _resultElement = responsePanel.querySelector(".result");
+function reset(section){
+    var _resultElement = section.querySelector(".result");
     if(_resultElement){
         _resultElement.innerHTML = "";
     }
@@ -66,9 +66,9 @@ function reset(responsePanel){
  *
  * @param responsePanel
  */
-function showSpinner(responsePanel){
+function showSpinner(section){
 
-    spinner = new Spinner(getDefaultSpinnerOptions()).spin(responsePanel);
+    spinner = new Spinner(getDefaultSpinnerOptions()).spin(section);
 
 }
 
@@ -80,10 +80,10 @@ function showSpinner(responsePanel){
  * @param div
  */
 function handleExecuteAction(div){
-    var responsePanel = document.getElementById(div);
-    reset(responsePanel);
-    responsePanel.querySelector(".responsePanel").style.display = "none";
-    showSpinner(responsePanel);
+    var _section = document.getElementById(div);
+    reset(_section);
+    _section.querySelector(".responsePanel").style.display = "none";
+    showSpinner(_section);
 }
 
 function getDefaultSpinnerOptions(){
