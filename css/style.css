@@ -44,3 +44,8 @@ a[disabled] {
 .callSection, .responsePanel {
     display: none;
 }
+
+.dataTextArea {
+    width: 22em;
+    height: 22em;
+}
