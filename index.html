@@ -73,9 +73,33 @@
             handleExecuteAction("updateScheduleResult");
             updateSchedule();
         };
+        document.getElementById('listSystemmessage').onclick = function () {
+            handleExecuteAction("listSystemmessageResult");
+            listSystemmessage();
+        };
+        document.getElementById('addUser').onclick = function () {
+            handleExecuteAction("addUserResult");
+            addUser();
+        };
+        document.getElementById('deleteUser').onclick = function () {
+            handleExecuteAction("deleteUserResult");
+            deleteUser();
+        };
+        document.getElementById('getUser').onclick = function () {
+            handleExecuteAction("getUserResult");
+            getUser();
+        };
+        document.getElementById('listUser').onclick = function () {
+            handleExecuteAction("listUserResult");
+            listUser();
+        };
+        document.getElementById('updateUser').onclick = function () {
+            handleExecuteAction("updateUserResult");
+            updateUser();
+        };
     }
 
-
+    // ------------------------- Company calls ----------------------------
     function addCompany() {
         console.log('addCompany');
         // getting parameter values
@@ -268,6 +292,7 @@
         }, ROOT);
     }
 
+    // ------------------------- Display calls ----------------------------
     function getDisplay() {
         console.log('getDisplay');
         // getting parameter values
@@ -334,6 +359,7 @@
         }, ROOT);
     }
 
+    // ------------------------- Schedule calls ----------------------------
     function addSchedule() {
         console.log('addSchedule');
         // getting parameter values
@@ -484,6 +510,203 @@
         }, ROOT);
     }
 
+    // ------------------------- Systemmessage calls ----------------------------
+    function listSystemmessage() {
+        console.log('listSystemmessage');
+        // getting parameters values
+        var _companyId = document.getElementById('listSystemmessage_companyId').value;
+        var _count = document.getElementById('listSystemmessage_count').value;
+        var _cursor = document.getElementById('listSystemmessage_cursor').value;
+        var _search = document.getElementById('listSystemmessage_search').value;
+        var _sort = document.getElementById('listSystemmessage_sort').value;
+        var _fields = document.getElementById('listSystemmessage_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_companyId) {
+            parameters['companyId'] = _companyId
+        }
+        if (_count) {
+            parameters['count'] = _count
+        }
+        if (_cursor) {
+            parameters['cursor'] = _cursor
+        }
+        if (_search) {
+            parameters['search'] = _search
+        }
+        if (_sort) {
+            parameters['sort'] = _sort
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.systemmessage.list(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listSystemmessageResult');
+            });
+        }, ROOT);
+    }
+
+    // ------------------------- User calls ----------------------------
+    function addUser() {
+        console.log('addUser');
+        // getting parameter values
+        var _data = document.getElementById('addUser_data').value;
+        var _companyId = document.getElementById('addUser_companyId').value;
+        var _username = document.getElementById('addUser_username').value;
+        var _fields = document.getElementById('addUser_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_companyId) {
+            parameters['companyId'] = _companyId;
+        }
+        if (_username) {
+            parameters['username'] = _username;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.user.add(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'addUserResult');
+            });
+        }, ROOT);
+    }
+
+
+    function deleteUser() {
+        console.log('deleteUser');
+        // getting parameter values
+        var _username = document.getElementById('deleteUser_username').value;
+        var _fields = document.getElementById('deleteUser_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_username) {
+            parameters['username'] = _username;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.user.delete(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'deleteUserResult');
+            });
+        }, ROOT);
+    }
+
+    function getUser() {
+        console.log('getUser');
+        // getting parameter values
+        var _username = document.getElementById('getUser_username').value;
+        var _fields = document.getElementById('getUser_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_username) {
+            parameters['username'] = _username;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.user.get(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'getUserResult');
+            });
+        }, ROOT);
+    }
+
+    function listUser() {
+        console.log('listUser');
+        // getting parameters values
+        var _companyId = document.getElementById('listUser_companyId').value;
+        var _count = document.getElementById('listUser_count').value;
+        var _cursor = document.getElementById('listUser_cursor').value;
+        var _search = document.getElementById('listUser_search').value;
+        var _sort = document.getElementById('listUser_sort').value;
+        var _fields = document.getElementById('listUser_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_companyId) {
+            parameters['companyId'] = _companyId
+        }
+        if (_count) {
+            parameters['count'] = _count
+        }
+        if (_cursor) {
+            parameters['cursor'] = _cursor
+        }
+        if (_search) {
+            parameters['search'] = _search
+        }
+        if (_sort) {
+            parameters['sort'] = _sort
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.user.list(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listUserResult');
+            });
+        }, ROOT);
+    }
+
+    function updateUser() {
+        console.log('updateUser');
+        // getting parameter values
+        var _data = document.getElementById('updateUser_data').value;
+        var _username = document.getElementById('updateUser_username').value;
+        var _fields = document.getElementById('updateUser_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_username) {
+            parameters['username'] = _username;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.user.update(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'updateUserResult');
+            });
+        }, ROOT);
+    }
+
     /**
      * This functions handles the response of the api call
      * It checks if there is a valida result and
@@ -617,29 +840,35 @@
                             </tr>
                             <!-------------------------------- Systemmessage calls --------------------------------------->
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','listSystemmessageSection');" disabled="disabled"
-                                       class="text-muted">core.systemmessage.list</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','listSystemmessageSection');">core.systemmessage.list</a></td>
                                 <td><span class="description">List Systemmessage</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <!-------------------------------- User calls --------------------------------------->
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','getUserSection');" disabled="disabled"
-                                       class="text-muted">core.user.get</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','addUserSection');">core.user.add</a></td>
+                                <td><span class="description">Add a user</span></td>
+                                <td><span class="label label-default">New</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','deleteUserSection');">core.user.delete</a></td>
+                                <td><span class="description">Delete a user</span></td>
+                                <td><span class="label label-default">New</span></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','getUserSection');">core.user.get</a></td>
                                 <td><span class="description">Get a user</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','listUserSection');" disabled="disabled"
-                                       class="text-muted">core.user.list</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','listUserSection');">core.user.list</a></td>
                                 <td><span class="description">List users</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updateUserSection');" disabled="disabled"
-                                       class="text-muted">core.user.update</a></td>
+                                <td><a href="javascript:navigate('listOfFunctions','updateUserSection');">core.user.update</a></td>
                                 <td><span class="description">Update a user</span></td>
-                                <td><span class="label label-info">Coming soon!!!</span></td>
+                                <td><span class="label label-default">New</span></td>
                             </tr>
                             </tbody>
                         </table>
@@ -1183,7 +1412,7 @@
                         </div>
                     </div>
 
-                    <!-- html elements for core.company.delete -->
+                    <!-- html elements for core.schedule.delete -->
                     <div id="deleteScheduleSection" class="callSection">
                         <div>
                             <ol class="breadcrumb">
@@ -1412,6 +1641,388 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Response</div>
                                         <div class="panel-body result" id="updateScheduleResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.systemmessage.list !-->
+                    <div id="listSystemmessageSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('listSystemmessageSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.systemmessage.list</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="listSystemmessage_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSystemmessage_companyId" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSystemmessage_count" class="col-sm-2 control-label">Count</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSystemmessage_count" placeholder="">
+                                        <span class="description">Max number of results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSystemmessage_cursor" class="col-sm-2 control-label">Cursor</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSystemmessage_cursor" placeholder="">
+                                        <span class="description">?? (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSystemmessage_search" class="col-sm-2 control-label">Search</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSystemmessage_search" placeholder="">
+                                        <span class="description">Search query (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSystemmessage_sort" class="col-sm-2 control-label">Sort</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSystemmessage_sort" placeholder="">
+                                        <span class="description">Field and direction to sort the results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listSystemmessage_fields" class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listSystemmessage_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="listSystemmessage" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="listSystemmessageResult">
+                                <div class="row responsePanel">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Response</div>
+                                            <div class="panel-body result" id="listSystemmessageResultArea">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.user.add -->
+                    <div id="addUserSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('addUserSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.user.add</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="addUser_data" class="col-sm-2 control-label">Data</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addUser_data" placeholder="">
+                                        <span class="description">Json object with pair key value of the company's fields (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="addUser_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addUser_companyId" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="addUser_username" class="col-sm-2 control-label">Username</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addUser_username" placeholder="">
+                                        <span class="description">The Username of the User (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="addUser_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="addUser" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="addUserResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="addUserResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.user.delete -->
+                    <div id="deleteUserSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('deleteUserSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.user.delete</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="deleteUser_username" class="col-sm-2 control-label">Username</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="deleteUser_username" placeholder="">
+                                        <span class="description">The Username of the User (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="deleteUser_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="deleteUser" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="deleteUserResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="deleteUserResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.user.get -->
+                    <div id="getUserSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('getUserSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.user.get</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="getUser_username" class="col-sm-2 control-label">Username</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="getUser_username" placeholder="">
+                                        <span class="description">The Username of the User (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="getUser_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="getUser" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="getUserResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="getUserResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.user.list !-->
+                    <div id="listUserSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('listUserSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.user.list</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="listUser_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listUser_companyId" placeholder="">
+                                        <span class="description">The Id of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listUser_count" class="col-sm-2 control-label">Count</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listUser_count" placeholder="">
+                                        <span class="description">Max number of results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listUser_cursor" class="col-sm-2 control-label">Cursor</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listUser_cursor" placeholder="">
+                                        <span class="description">?? (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listUser_search" class="col-sm-2 control-label">Search</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listUser_search" placeholder="">
+                                        <span class="description">Search query (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listUser_sort" class="col-sm-2 control-label">Sort</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listUser_sort" placeholder="">
+                                        <span class="description">Field and direction to sort the results (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="listUser_fields" class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="listUser_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="listUser" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="listUserResult">
+                                <div class="row responsePanel">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Response</div>
+                                            <div class="panel-body result" id="listUserResultArea">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.user.update -->
+                    <div id="updateUserSection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('updateUserSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.user.update</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="updateUser_data" class="col-sm-2 control-label">Data</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateUser_data" placeholder="">
+                                        <span class="description">Json object with pair key value of the company's fields (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateUser_username" class="col-sm-2 control-label">Username</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateUser_username" placeholder="">
+                                        <span class="description">The Username of the User (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateUser_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="updateUser" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="updateUserResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="updateUserResultArea">
                                         </div>
                                     </div>
                                 </div>
