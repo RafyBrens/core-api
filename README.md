@@ -46,27 +46,6 @@ At this time Chrome is the only browser that this project and Rise Vision suppor
 git clone https://github.com/Rise-Vision/core-api.git
 ```
 
-* cd into the javascript folder in the repo directory
-```bash
-cd core-api/javascript
-```
-
-* edit auth.js file with your favorite editor
-```bash
-vi auth.js
-```
-
-* uncomment CLIENT_ID for localhost origin
-```javascript
-//var CLIENT_ID = '1078646427254-mb590bbaki7a6qlr7rsoq2cc76rn0d42.apps.googleusercontent.com'; //CLIENT_ID for local development
-```
-
-* comment out CLIENT_ID for github pages
-```javascript
-var CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleusercontent.com'; // CLIENT_ID for github pages
-```
-* save your changes
-
 * Go to "Run Client" section in readme to see how to run this app.
 
 #### Windows 
@@ -75,21 +54,6 @@ var CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleuserc
 ```bash
 git clone https://github.com/Rise-Vision/storage-client.git
 ```
-
-* navigate to the javascript folder in the repo directory
-
-* edit auth.js file with your favorite editor  
-
-* uncomment CLIENT_ID for localhost origin
-```javascript
-//var CLIENT_ID = '1078646427254-mb590bbaki7a6qlr7rsoq2cc76rn0d42.apps.googleusercontent.com'; //CLIENT_ID for local development
-```
-
-* comment out CLIENT_ID for github pages
-```javascript
-var CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleusercontent.com'; // CLIENT_ID for github pages
-```
-* save your changes
 
 * Go to "Run Client" section in readme to see how to run this app.
 
