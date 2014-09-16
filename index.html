@@ -38,6 +38,10 @@
             handleExecuteAction("listCompanySection");
             listCompany();
         };
+        document.getElementById('lookupCompany').onclick = function () {
+            handleExecuteAction("lookupCompanySection");
+            lookupCompany();
+        };
         document.getElementById('moveCompany').onclick = function () {
             handleExecuteAction("moveCompanySection");
             moveCompany();
@@ -235,20 +239,41 @@
         }, ROOT);
     }
 
+    function lookupCompany() {
+        console.log('lookupCompany');
+        // getting parameter values
+        var _authKey = document.getElementById('lookupCompany_authKey').value;
+        var _fields = document.getElementById('lookupCompany_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_authKey) {
+            parameters['authKey'] = _authKey;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.company.lookup(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'lookupCompanyResult');
+            });
+        }, ROOT);
+    }
+
     function moveCompany() {
         console.log('moveCompany');
         // getting parameter values
-        var _id = document.getElementById('moveCompany_id').value;
-        var _newParentId = document.getElementById('moveCompany_newParentId').value;
+        var _authKey = document.getElementById('moveCompany_authKey').value;
         var _fields = document.getElementById('moveCompany_fields').value;
 
         // create a javascript object which will be converted to Json
         var parameters = {};
-        if (_id) {
-            parameters['id'] = _id;
-        }
-        if (_newParentId) {
-            parameters['newParentId'] = _newParentId;
+        if (_authKey) {
+            parameters['authKey'] = _authKey;
         }
         if (_fields) {
             parameters['fields'] = _fields;
@@ -774,102 +799,107 @@
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','addCompanySection');">core.company.add</a></td>
                                 <td><span class="description">Add a company</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','deleteCompanySection');">core.company.delete</a></td>
                                 <td><span class="description">Delete a company</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','getCompanySection');">core.company.get</a></td>
                                 <td><span class="description">Gets the information about a company</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
 
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','listCompanySection');">core.company.list</a></td>
                                 <td><span class="description">List the companies under a head company</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','lookupCompanySection');">core.company.lookup</a></td>
+                                <td><span class="description">Lookup a company</span></td>
                                 <td><span class="label label-default">New</span></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','moveCompanySection');">core.company.move</a></td>
                                 <td><span class="description">Move a company</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','updateCompanySection');">core.company.update</a></td>
                                 <td><span class="description">Update a company</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <!-------------------------------- Display calls --------------------------------------->
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','getDisplaySection');">core.display.get</a></td>
                                 <td><span class="description">Get a display</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','listDisplaySection');">core.display.list</a></td>
                                 <td><span class="description">List displays</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <!-------------------------------- Schedule calls --------------------------------------->
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','addScheduleSection');">core.schedule.add</a></td>
                                 <td><span class="description">Add a schedule</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','deleteScheduleSection');">core.schedule.delete</a></td>
                                 <td><span class="description">Delete a schedule</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','getScheduleSection');">core.schedule.get</a></td>
                                 <td><span class="description">Get a schedule</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','listScheduleSection');">core.schedule.list</a></td>
                                 <td><span class="description">List schedules</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','updateScheduleSection');">core.schedule.update</a></td>
                                 <td><span class="description">Update a schedule</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <!-------------------------------- Systemmessage calls --------------------------------------->
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','listSystemmessageSection');">core.systemmessage.list</a></td>
                                 <td><span class="description">List Systemmessage</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <!-------------------------------- User calls --------------------------------------->
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','addUserSection');">core.user.add</a></td>
                                 <td><span class="description">Add a user</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','deleteUserSection');">core.user.delete</a></td>
                                 <td><span class="description">Delete a user</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','getUserSection');">core.user.get</a></td>
                                 <td><span class="description">Get a user</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','listUserSection');">core.user.list</a></td>
                                 <td><span class="description">List users</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','updateUserSection');">core.user.update</a></td>
                                 <td><span class="description">Update a user</span></td>
-                                <td><span class="label label-default">New</span></td>
+                                <td></td>
                             </tr>
                             </tbody>
                         </table>
@@ -1112,6 +1142,55 @@
                         </div>
                     </div>
 
+                    <!-- html elements for core.company.lookup -->
+                    <div id="lookupCompanySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('lookupCompanySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.company.lookup</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="lookupCompany_authKey" class="col-sm-2 control-label">authKey</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="lookupCompany_authKey" placeholder="">
+                                        <span class="description">The authkey of the Company (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="lookupCompany_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="lookupCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="lookupCompanyResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="lookupCompanyResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- html elements for core.company.move -->
                     <div id="moveCompanySection" class="callSection">
                         <div>
@@ -1123,19 +1202,11 @@
                         <div>
                             <form class="form-horizontal form" action="javascript:void(0);">
                                 <div class="form-group">
-                                    <label for="moveCompany_id" class="col-sm-2 control-label">Id</label>
+                                    <label for="moveCompany_authKey" class="col-sm-2 control-label">authKey</label>
 
                                     <div class="col-sm-10">
-                                        <input id="moveCompany_id" placeholder="">
-                                        <span class="description">The Id of the Company (String)</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="moveCompany_newParentId" class="col-sm-2 control-label">New Parent Id</label>
-
-                                    <div class="col-sm-10">
-                                        <input id="moveCompany_newParentId" placeholder="">
-                                        <span class="description">The Id of the New Parent Company (String)</span>
+                                        <input id="moveCompany_authKey" placeholder="">
+                                        <span class="description">The authkey of the Company (String)</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
