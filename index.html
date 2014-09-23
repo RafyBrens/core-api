@@ -14,11 +14,16 @@
     function init() {
         console.log('init');
 
-        signin(true, handleAuth); // tries to authenticate the user during loading. See auth.js file
+        checkAuth(); // tries to authenticate the user during loading. See auth.js file
 
         document.getElementById('signinButton').onclick = function () {
             console.log('login button clicked');
-            signin(false, handleAuth); // more details in the auth.js file
+            signin(); // more details in the auth.js file
+        };
+
+        document.getElementById('signoutButton').onclick = function () {
+            console.log('logout button clicked');
+            signout(); // more details in the auth.js file
         };
 
         // ------------------------ Handles the submit event -------------------------
@@ -768,13 +773,14 @@
                             <div class="navbar-header">
                                 <span class="navbar-brand"><img src="http://s3.amazonaws.com/rise-common/images/logo-small.png"> &nbsp;&nbsp;API Console</span>
                                 <span id="signinText" class="navbar-text">Authorize requests using OAuth 2.0:</span>
-                                <!--button id="signinButton" type="button" class="btn btn-primary btn-fixed-width navbar-btn">
-                                    Sign in <i class="fa fa fa-white fa-sign-in icon-right"></i>
-                                </button-->
                             </div>
                             <button id="signinButton" type="button" class="btn btn-primary btn-fixed-width navbar-btn">
-                                Sign in <i class="fa fa fa-white fa-sign-in icon-right"></i>
+                                Sign in <i class="fa fa-white fa-sign-in icon-right"></i>
                             </button>
+                            <a href="javascript:void(0);" id="signoutButton" class="navbar-nav">
+                                <span>Sign Out</span>
+                                <i class="fa fa-blue-custom fa-sign-out"></i>
+                            </a>
                             <a type="button" class="btn btn-rv-help btn-fixed-width navbar-right"
                                href="https://github.com/Rise-Vision/core-api" target="_blank">
                                 Contribute <i class="fa fa-github fa-lg "></i>

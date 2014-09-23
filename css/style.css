@@ -45,7 +45,20 @@ a[disabled] {
     display: none;
 }
 
+#signoutButton {
+    visibility: hidden;
+    display: none;
+}
+
 .dataTextArea {
     width: 22em;
     height: 22em;
 }
+
+.fa-blue-custom::before {
+    color: #2d60ad;
+}
+a:hover .fa-blue-custom::before {
+    color: #1d3e70;
+}
+

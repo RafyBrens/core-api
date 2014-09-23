@@ -41,9 +41,13 @@ var API_VER = 'v0';
  * Load the oauth2 api.
  *
  */
-function handleAuth() {
+function handleAuth(authResult) {
     console.log('handle auth');
-    gapi.client.load('oauth2', 'v2', makeOAuth2Request);
+    console.log(authResult);
+    if (authResult && !authResult.error) {
+        gapi.client.load('oauth2', 'v2', makeOAuth2Request);
+    }
+
 }
 
 /**
@@ -57,13 +61,24 @@ function makeOAuth2Request() {
         if (!resp.code) {
             console.log(resp);
             // User is signed in, so hide the button
-            document.getElementById('signinButton').style.visibility = 'hidden';
+            hideSigninButton();
+            showSignoutButton();
+
             document.getElementById('signinText').innerText = 'Welcome ' + resp.name + ' [' + resp.email + ']';
         }
         else {
-            document.getElementById('signinButton').style.visibility = 'visible';
+            hideSignoutButton();
+            showSigninButton();
         }
     });
+}
+
+/**
+ * Check if users is already signed in
+ */
+function checkAuth() {
+    console.log('check auth');
+    gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: true, cookie_policy: 'single_host_origin'}, handleAuth);
 }
 
 /**
@@ -72,7 +87,54 @@ function makeOAuth2Request() {
  * @param mode
  * @param callback
  */
-function signin(mode, callback) {
+function signin() {
     console.log('attempting login');
-    gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: mode}, callback);
+    gapi.auth.authorize({client_id: CLIENT_ID, scope: SCOPES, immediate: false, cookie_policy: 'single_host_origin'}, handleAuth);
+    return false;
+}
+
+/**
+ *  Call the signout from google api
+ */
+function signout() {
+    console.log("Signing Out");
+    gapi.auth.signOut();
+
+    hideSignoutButton();
+    showSigninButton();
+
+    document.getElementById('signinText').innerText = 'Authorize requests using OAuth 2.0:';
+
+}
+
+/**
+ *  Toggle the DOM to show the Signin button
+ */
+function showSigninButton() {
+    document.getElementById('signinButton').style.visibility = 'visible';
+    document.getElementById('signinButton').style.display = 'inline';
+}
+
+/**
+ *  Toggle the DOM to show the Signout button
+ */
+function showSignoutButton() {
+    document.getElementById('signoutButton').style.visibility = 'visible';
+    document.getElementById('signoutButton').style.display = 'inline';
+}
+
+/**
+ *  Toggle the DOM to hide the Signin button
+ */
+function hideSigninButton() {
+    document.getElementById('signinButton').style.visibility = 'hidden';
+    document.getElementById('signinButton').style.display = 'none';
+}
+
+/**
+ * Toggle the DOM to hide the Signout button
+ */
+function hideSignoutButton() {
+    document.getElementById('signoutButton').style.visibility = 'hidden';
+    document.getElementById('signoutButton').style.display = 'none';
 }
