@@ -43,7 +43,6 @@ var API_VER = 'v0';
  */
 function handleAuth(authResult) {
     console.log('handle auth');
-    console.log(authResult);
     if (authResult && !authResult.error) {
         gapi.client.load('oauth2', 'v2', makeOAuth2Request);
     }
@@ -84,8 +83,6 @@ function checkAuth() {
 /**
  *  Call api to signin a user.
  *
- * @param mode
- * @param callback
  */
 function signin() {
     console.log('attempting login');
