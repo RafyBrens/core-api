@@ -21,6 +21,10 @@ function getSampleJson(dataTextAreaId){
         case "updateCompany_data":
             _sampleJson = getCompanySampleJson();
             break;
+        case "addDisplay_data":
+        case "updateDisplay_data":
+            _sampleJson = getDisplaySampleJson();
+            break;
         case "addSchedule_data":
         case "updateSchedule_data":
             _sampleJson = getScheduleSampleJson();
@@ -45,29 +49,25 @@ function getCompanySampleJson(){
     var _company = new Object();
 
     _company.name = 'Sample Companys Name';
-    /*_company.street = '';
-    _company.unit = '';
-    _company.city = '';
-    _company.province = '';
-    _company.country = '';
-    _company.postal_code = '';
-    _company.time_zone_offset = '';
-    _company.telephone = '';
-    _company.fax = '';
-    _company.company_status = '';
-    _company.notification_emails = '';
-    _company.settings = '';
-    _company.mail_sync_enabled = '';
-    _company.alert_settings = '';
-    _company.company_type = '';
-    _company.services_provided = '';
-    _company.market_segments = '';
-    _company.target_groups = '';
-    _company.views_per_display = '';
-    _company.advertising_revenue_earn = '';
-    _company.advertising_revenue_interested = '';*/
 
     return JSON.stringify(_company,"","\t");
+}
+
+/**
+ * Returns sample json for Display entity
+ *
+ * @returns {string}
+ */
+
+function getDisplaySampleJson(){
+
+    var _display = new Object();
+
+    _display.name = 'Sample Display Name';
+    _display.width = 0;
+    _display.height = 0;
+
+    return JSON.stringify(_display,"","\t");
 }
 
 /**

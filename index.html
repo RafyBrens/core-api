@@ -55,6 +55,18 @@
             handleExecuteAction("updateCompanySection");
             updateCompany();
         };
+        document.getElementById('regenerateFieldCompany').onclick = function () {
+            handleExecuteAction("regenerateFieldCompanySection");
+            regenerateFieldCompany();
+        };
+        document.getElementById('addDisplay').onclick = function () {
+            handleExecuteAction("addDisplaySection");
+            addDisplay();
+        };
+        document.getElementById('deleteDisplay').onclick = function () {
+            handleExecuteAction("deleteDisplaySection");
+            deleteDisplay();
+        };
         document.getElementById('getDisplay').onclick = function () {
             handleExecuteAction("getDisplaySection");
             getDisplay();
@@ -62,6 +74,10 @@
         document.getElementById('listDisplay').onclick = function () {
             handleExecuteAction("listDisplaySection");
             listDisplay();
+        };
+        document.getElementById('updateDisplay').onclick = function () {
+            handleExecuteAction("updateDisplaySection");
+            updateDisplay();
         };
         document.getElementById('addSchedule').onclick = function () {
             handleExecuteAction("addScheduleSection");
@@ -106,6 +122,10 @@
         document.getElementById('updateUser').onclick = function () {
             handleExecuteAction("updateUserSection");
             updateUser();
+        };
+        document.getElementById('listCountry').onclick = function () {
+            handleExecuteAction("listCountrySection");
+            listCountry();
         };
     }
 
@@ -165,22 +185,12 @@
         }, ROOT);
     }
 
-
-    /**
-     *  This function loads the api to make the request.
-     */
-    function getCompany() {
-        console.log('getCompany');
-        gapi.client.load(API_NAME, API_VER, makeCompanyRequest, ROOT);
-
-    }
-
     /**
      * This function gets the fields values from the form and
      * call the api using the google javascript api(gapi)
      */
-    function makeCompanyRequest() {
-
+    function getCompany() {
+        console.log('getCompany');
         // getting parameter values
         var _id = document.getElementById('getCompany_id').value;
         var _fields = document.getElementById('getCompany_fields').value;
@@ -194,13 +204,16 @@
             parameters['fields'] = _fields
         }
 
-        // calling the api passing the parameter object
-        var request = gapi.client.core.company.get(parameters);
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            // calling the api passing the parameter object
+            var request = gapi.client.core.company.get(parameters);
 
-        // jsonResp object has got a duplication of the data which comes under result element
-        request.execute(function (jsonResp, rawResp) {
-            handlesResponse(jsonResp, rawResp, 'getCompanyResult');
-        })
+            // jsonResp object has got a duplication of the data which comes under result element
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'getCompanyResult');
+            })
+        }, ROOT);
     }
 
     function listCompany() {
@@ -323,7 +336,92 @@
         }, ROOT);
     }
 
+    function regenerateFieldCompany() {
+        console.log('regenerateFieldCompany');
+        // getting parameter values
+        var _fieldName = document.getElementById('regenerateFieldCompany_fieldName').value;
+        var _id = document.getElementById('regenerateFieldCompany_id').value;
+        var _fields = document.getElementById('getCompany_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_fieldName) {
+            parameters['fieldName'] = _fieldName
+        }
+        if (_id) {
+            parameters['id'] = _id
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            // calling the api passing the parameter object
+            var request = gapi.client.core.company.regenerateField(parameters);
+
+            // jsonResp object has got a duplication of the data which comes under result element
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'regenerateFieldCompanyResult');
+            })
+        }, ROOT);
+    }
+
     // ------------------------- Display calls ----------------------------
+    function addDisplay() {
+        console.log('addDisplay');
+        // getting parameter values
+        var _data = document.getElementById('addDisplay_data').value;
+        var _companyId = document.getElementById('addDisplay_companyId').value;
+        var _fields = document.getElementById('addDisplay_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_companyId) {
+            parameters['companyId'] = _companyId;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.display.add(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'addDisplayResult');
+            });
+        }, ROOT);
+    }
+
+    function deleteDisplay() {
+        console.log('deleteDisplay');
+        // getting parameter values
+        var _id = document.getElementById('deleteDisplay_id').value;
+        var _fields = document.getElementById('deleteDisplay_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.display.delete(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'deleteDisplayResult');
+            });
+        }, ROOT);
+    }
+
     function getDisplay() {
         console.log('getDisplay');
         // getting parameter values
@@ -386,6 +484,35 @@
 
             request.execute(function (jsonResp, rawResp) {
                 handlesResponse(jsonResp, rawResp, 'listDisplayResult');
+            });
+        }, ROOT);
+    }
+
+    function updateDisplay() {
+        console.log('updateDisplay');
+        // getting parameter values
+        var _data = document.getElementById('updateDisplay_data').value;
+        var _id = document.getElementById('updateDisplay_id').value;
+        var _fields = document.getElementById('updateDisplay_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.display.update(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'updateDisplayResult');
             });
         }, ROOT);
     }
@@ -722,6 +849,30 @@
         }, ROOT);
     }
 
+    // ------------------------- Country calls ----------------------------
+    function listCountry() {
+        console.log('listCountry');
+        // getting parameter values
+        var _fields = document.getElementById('listCountry_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            // calling the api passing the parameter object
+            var request = gapi.client.core.country.list(parameters);
+
+            // jsonResp object has got a duplication of the data which comes under result element
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listCountryResult');
+            })
+        }, ROOT);
+    }
+
     /**
      * This functions handles the response of the api call
      * It checks if there is a valida result and
@@ -822,7 +973,22 @@
                                 <td><span class="description">Update a company</span></td>
                                 <td></td>
                             </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','regenerateFieldCompanySection');">core.company.regenerateField</a></td>
+                                <td><span class="description">Regenerate field of a company</span></td>
+                                <td></td>
+                            </tr>
                             <!-------------------------------- Display calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','addDisplaySection');">core.display.add</a></td>
+                                <td><span class="description">Add a display</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','deleteDisplaySection');">core.display.delete</a></td>
+                                <td><span class="description">Delete a display</span></td>
+                                <td></td>
+                            </tr>
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','getDisplaySection');">core.display.get</a></td>
                                 <td><span class="description">Get a display</span></td>
@@ -831,6 +997,11 @@
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','listDisplaySection');">core.display.list</a></td>
                                 <td><span class="description">List displays</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','updateDisplaySection');">core.display.update</a></td>
+                                <td><span class="description">Update a display</span></td>
                                 <td></td>
                             </tr>
                             <!-------------------------------- Schedule calls --------------------------------------->
@@ -889,6 +1060,11 @@
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','updateUserSection');">core.user.update</a></td>
                                 <td><span class="description">Update a user</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listCountrySection');">core.country.list</a></td>
+                                <td><span class="description">List of countries</span></td>
                                 <td></td>
                             </tr>
                             </tbody>
@@ -1287,6 +1463,169 @@
                         </div>
                     </div>
 
+                <!-- html elements for core.company.regenerateField -->
+                <div id="regenerateFieldCompanySection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('regenerateFieldCompanySection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.company.regenerateField</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="regenerateFieldCompany_fieldName" class="col-sm-2 control-label">fieldName</label>
+
+                                <div class="col-sm-10">
+                                    <input id="regenerateFieldCompany_fieldName" placeholder="">
+                                    <span class="description">The field name of the Company (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="regenerateFieldCompany_id" class="col-sm-2 control-label">Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="regenerateFieldCompany_id" placeholder="">
+                                    <span class="description">The Id of the Company (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="regenerateFieldCompany_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="regenerateFieldCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="regenerateFieldCompanyResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="regenerateFieldCompanyResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.schedule.add -->
+                <div id="addDisplaySection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('addDisplaySection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.display.add</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="addDisplay_data" class="col-sm-2 control-label">Data</label>
+
+                                <div class="col-sm-10">
+                                    <textarea id="addDisplay_data" class="dataTextArea"></textarea>
+                                    <span class="description">Json object with pair key value of the display's fields (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="addDisplay_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="addDisplay_companyId" placeholder="">
+                                    <span class="description">The Id of the Company (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="addDisplay_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="addDisplay" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="addDisplayResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="addDisplayResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.display.delete -->
+                <div id="deleteDisplaySection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('deleteDisplaySection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.display.delete</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="deleteDisplay_id" class="col-sm-2 control-label">Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="deleteDisplay_id" placeholder="">
+                                    <span class="description">The Id of the Display (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="deleteDisplay_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="deleteDisplay" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="deleteDisplayResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="deleteDisplayResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                     <!-- html elements for core.display.get -->
                     <div id="getDisplaySection" class="callSection">
                         <div>
@@ -1410,6 +1749,63 @@
                                             <div class="panel-heading">Response</div>
                                             <div class="panel-body result" id="listDisplayResultArea">
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- html elements for core.display.update -->
+                    <div id="updateDisplaySection" class="callSection">
+                        <div>
+                            <ol class="breadcrumb">
+                                <li><a href="javascript:navigate('updateDisplaySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.display.update</li>
+                            </ol>
+                        </div>
+                        <div>
+                            <form class="form-horizontal form" action="javascript:void(0);">
+                                <div class="form-group">
+                                    <label for="updateDisplay_data" class="col-sm-2 control-label">Data</label>
+
+                                    <div class="col-sm-10">
+                                        <textarea id="updateDisplay_data" class="dataTextArea"></textarea>
+                                        <span class="description">Json object with pair key value of the display's fields (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="updateDisplay_id" class="col-sm-2 control-label">Id</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateDisplay_id" placeholder="">
+                                        <span class="description">The Id of the Display (String)</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Fields</label>
+
+                                    <div class="col-sm-10">
+                                        <input id="updateDisplay_fields" placeholder="">
+                                        <span class="description">Selector specifying which fields to include in a partial response</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button id="updateDisplay" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                            Execute <i class="fa fa-white fa-check icon-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="updateDisplayResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="updateDisplayResultArea">
                                         </div>
                                     </div>
                                 </div>
@@ -2059,6 +2455,48 @@
                             </div>
                         </div>
                     </div>
+
+                <!-- html elements for core.country.list -->
+                <div id="listCountrySection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('listCountrySection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.country.list</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listCountry_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="listCountry" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="listCountryResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="listCountryResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 </div>
             </div>
