@@ -165,22 +165,12 @@
         }, ROOT);
     }
 
-
-    /**
-     *  This function loads the api to make the request.
-     */
-    function getCompany() {
-        console.log('getCompany');
-        gapi.client.load(API_NAME, API_VER, makeCompanyRequest, ROOT);
-
-    }
-
     /**
      * This function gets the fields values from the form and
      * call the api using the google javascript api(gapi)
      */
-    function makeCompanyRequest() {
-
+    function getCompany() {
+        console.log('getCompany');
         // getting parameter values
         var _id = document.getElementById('getCompany_id').value;
         var _fields = document.getElementById('getCompany_fields').value;
@@ -194,13 +184,16 @@
             parameters['fields'] = _fields
         }
 
-        // calling the api passing the parameter object
-        var request = gapi.client.core.company.get(parameters);
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            // calling the api passing the parameter object
+            var request = gapi.client.core.company.get(parameters);
 
-        // jsonResp object has got a duplication of the data which comes under result element
-        request.execute(function (jsonResp, rawResp) {
-            handlesResponse(jsonResp, rawResp, 'getCompanyResult');
-        })
+            // jsonResp object has got a duplication of the data which comes under result element
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'getCompanyResult');
+            })
+        }, ROOT);
     }
 
     function listCompany() {
