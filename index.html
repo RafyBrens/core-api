@@ -155,6 +155,14 @@
             handleExecuteAction("restorePresentationSection");
             restorePresentation();
         };
+        document.getElementById('listTemplate').onclick = function () {
+            handleExecuteAction("listTemplateSection");
+            listTemplate();
+        };
+        document.getElementById('listTimezone').onclick = function () {
+            handleExecuteAction("listTimezoneSection");
+            listTimezone();
+        };
     }
 
     // ------------------------- Company calls ----------------------------
@@ -1102,6 +1110,73 @@
         }, ROOT);
     }
 
+    // ------------------------- Template calls ----------------------------
+    function listTemplate() {
+        console.log('listTemplate');
+        // getting parameters values
+        var _companyId = document.getElementById('listTemplate_companyId').value;
+        var _count = document.getElementById('listTemplate_count').value;
+        var _cursor = document.getElementById('listTemplate_cursor').value;
+        var _search = document.getElementById('listTemplate_search').value;
+        var _sort = document.getElementById('listTemplate_sort').value;
+        var _fields = document.getElementById('listTemplate_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_companyId) {
+            parameters['companyId'] = _companyId
+        }
+        if (_count) {
+            parameters['count'] = _count
+        }
+        if (_cursor) {
+            parameters['cursor'] = _cursor
+        }
+        if (_search) {
+            parameters['search'] = _search
+        }
+        if (_sort) {
+            parameters['sort'] = _sort
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.template.list(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listTemplateResult');
+            });
+        }, ROOT);
+    }
+
+
+    // ------------------------- Timezone calls ----------------------------
+    function listTimezone() {
+        console.log('listTimezone');
+        // getting parameter values
+        var _fields = document.getElementById('listTimezone_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            // calling the api passing the parameter object
+            var request = gapi.client.core.timezone.list(parameters);
+
+            // jsonResp object has got a duplication of the data which comes under result element
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listTimezoneResult');
+            })
+        }, ROOT);
+    }
+
     /**
      * This functions handles the response of the api call
      * It checks if there is a valida result and
@@ -1331,6 +1406,18 @@
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','restorePresentationSection');">core.presentation.restore</a></td>
                                 <td><span class="description">Restore a presentation</span></td>
+                                <td></td>
+                            </tr>
+                            <!-------------------------------- Country calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listTemplateSection');">core.template.list</a></td>
+                                <td><span class="description">List of templates</span></td>
+                                <td></td>
+                            </tr>
+                            <!-------------------------------- Country calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listTimezoneSection');">core.timezone.list</a></td>
+                                <td><span class="description">List of timezones</span></td>
                                 <td></td>
                             </tr>
                             </tbody>
@@ -3147,7 +3234,130 @@
                             <div class="col-md-12">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Response</div>
-                                    <div class="panel-body result" id="restorePresentationResultArea">
+                                    <div class="panel-body result" id="restoreTemplateResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.template.list !-->
+                <div id="listTemplateSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('listTemplateSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.template.list</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="listTemplate_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_companyId" placeholder="">
+                                    <span class="description">The Id of the Company (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_count" class="col-sm-2 control-label">Count</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_count" placeholder="">
+                                    <span class="description">Max number of results (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_cursor" class="col-sm-2 control-label">Cursor</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_cursor" placeholder="">
+                                    <span class="description">?? (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_search" class="col-sm-2 control-label">Search</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_search" placeholder="">
+                                    <span class="description">Search query (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_sort" class="col-sm-2 control-label">Sort</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_sort" placeholder="">
+                                    <span class="description">Field and direction to sort the results (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_fields" class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="listTemplate" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="listTemplateResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="listTemplateResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.timezone.list -->
+                <div id="listTimezoneSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('listTimezoneSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.timezone.list</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTimezone_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="listTimezone" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="listTimezoneResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="listTimezoneResultArea">
                                     </div>
                                 </div>
                             </div>
