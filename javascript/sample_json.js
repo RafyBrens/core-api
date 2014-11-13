@@ -33,6 +33,10 @@ function getSampleJson(dataTextAreaId){
         case "updateUser_data":
             _sampleJson = getUserSampleJson();
             break;
+        case "addPresentation_data":
+        case "updatePresentation_data":
+            _sampleJson = getPresentationSampleJson();
+            break;
     }
 
     return _sampleJson;
@@ -97,4 +101,19 @@ function getUserSampleJson(){
     _user.email = "sample@sample.com";
 
     return JSON.stringify(_user,"","\t");
+}
+
+/**
+ * Returns sample json for Schedule entity
+ *
+ * @returns {string}
+ */
+function getPresentationSampleJson(){
+
+    var _presentation = new Object();
+
+    _presentation.name = "Sample presentation";
+
+    return JSON.stringify(_presentation,"","\t");
+
 }
