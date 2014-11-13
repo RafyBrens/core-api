@@ -127,6 +127,42 @@
             handleExecuteAction("listCountrySection");
             listCountry();
         };
+        document.getElementById('addPresentation').onclick = function () {
+            handleExecuteAction("addPresentationSection");
+            addPresentation();
+        };
+        document.getElementById('deletePresentation').onclick = function () {
+            handleExecuteAction("deletePresentationSection");
+            deletePresentation();
+        };
+        document.getElementById('getPresentation').onclick = function () {
+            handleExecuteAction("getPresentationSection");
+            getPresentation();
+        };
+        document.getElementById('listPresentation').onclick = function () {
+            handleExecuteAction("listPresentationSection");
+            listPresentation();
+        };
+        document.getElementById('updatePresentation').onclick = function () {
+            handleExecuteAction("updatePresentationSection");
+            updatePresentation();
+        };
+        document.getElementById('publishPresentation').onclick = function () {
+            handleExecuteAction("publishPresentationSection");
+            publishPresentation();
+        };
+        document.getElementById('restorePresentation').onclick = function () {
+            handleExecuteAction("restorePresentationSection");
+            restorePresentation();
+        };
+        document.getElementById('listTemplate').onclick = function () {
+            handleExecuteAction("listTemplateSection");
+            listTemplate();
+        };
+        document.getElementById('listTimezone').onclick = function () {
+            handleExecuteAction("listTimezoneSection");
+            listTimezone();
+        };
     }
 
     // ------------------------- Company calls ----------------------------
@@ -873,6 +909,274 @@
         }, ROOT);
     }
 
+    // ------------------------- Presentation calls ----------------------------
+    function addPresentation() {
+        console.log('addPresentation');
+        // getting parameter values
+        var _data = document.getElementById('addPresentation_data').value;
+        var _companyId = document.getElementById('addPresentation_companyId').value;
+        var _fields = document.getElementById('addPresentation_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_companyId) {
+            parameters['companyId'] = _companyId;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.presentation.add(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'addPresentationResult');
+            });
+        }, ROOT);
+    }
+
+
+    function deletePresentation() {
+        console.log('deletePresentation');
+        // getting parameter values
+        var _id = document.getElementById('deletePresentation_id').value;
+        var _fields = document.getElementById('deletePresentation_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.presentation.delete(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'deletePresentationResult');
+            });
+        }, ROOT);
+    }
+
+    function getPresentation() {
+        console.log('getPresentation');
+        // getting parameter values
+        var _id = document.getElementById('getPresentation_id').value;
+        var _fields = document.getElementById('getPresentation_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.presentation.get(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'getPresentationResult');
+            });
+        }, ROOT);
+    }
+
+    function listPresentation() {
+        console.log('listPresentation');
+        // getting parameters values
+        var _companyId = document.getElementById('listPresentation_companyId').value;
+        var _count = document.getElementById('listPresentation_count').value;
+        var _cursor = document.getElementById('listPresentation_cursor').value;
+        var _search = document.getElementById('listPresentation_search').value;
+        var _sort = document.getElementById('listPresentation_sort').value;
+        var _fields = document.getElementById('listPresentation_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_companyId) {
+            parameters['companyId'] = _companyId
+        }
+        if (_count) {
+            parameters['count'] = _count
+        }
+        if (_cursor) {
+            parameters['cursor'] = _cursor
+        }
+        if (_search) {
+            parameters['search'] = _search
+        }
+        if (_sort) {
+            parameters['sort'] = _sort
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.presentation.list(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listPresentationResult');
+            });
+        }, ROOT);
+    }
+
+    function updatePresentation() {
+        console.log('updatePresentation');
+        // getting parameter values
+        var _data = document.getElementById('updatePresentation_data').value;
+        var _id = document.getElementById('updatePresentation_id').value;
+        var _fields = document.getElementById('updatePresentation_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_data) {
+            parameters['data'] = _data;
+        }
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.presentation.update(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'updatePresentationResult');
+            });
+        }, ROOT);
+    }
+
+    function publishPresentation() {
+        console.log('publishPresentation');
+        // getting parameter values
+        var _id = document.getElementById('publishPresentation_id').value;
+        var _fields = document.getElementById('publishPresentation_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.presentation.publish(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'publishPresentationResult');
+            });
+        }, ROOT);
+    }
+
+    function restorePresentation() {
+        console.log('restorePresentation');
+        // getting parameter values
+        var _id = document.getElementById('restorePresentation_id').value;
+        var _fields = document.getElementById('restorePresentation_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_id) {
+            parameters['id'] = _id;
+        }
+        if (_fields) {
+            parameters['fields'] = _fields;
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.presentation.restore(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'restorePresentationResult');
+            });
+        }, ROOT);
+    }
+
+    // ------------------------- Template calls ----------------------------
+    function listTemplate() {
+        console.log('listTemplate');
+        // getting parameters values
+        var _companyId = document.getElementById('listTemplate_companyId').value;
+        var _count = document.getElementById('listTemplate_count').value;
+        var _cursor = document.getElementById('listTemplate_cursor').value;
+        var _search = document.getElementById('listTemplate_search').value;
+        var _sort = document.getElementById('listTemplate_sort').value;
+        var _fields = document.getElementById('listTemplate_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_companyId) {
+            parameters['companyId'] = _companyId
+        }
+        if (_count) {
+            parameters['count'] = _count
+        }
+        if (_cursor) {
+            parameters['cursor'] = _cursor
+        }
+        if (_search) {
+            parameters['search'] = _search
+        }
+        if (_sort) {
+            parameters['sort'] = _sort
+        }
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            var request = gapi.client.core.template.list(parameters);
+
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listTemplateResult');
+            });
+        }, ROOT);
+    }
+
+
+    // ------------------------- Timezone calls ----------------------------
+    function listTimezone() {
+        console.log('listTimezone');
+        // getting parameter values
+        var _fields = document.getElementById('listTimezone_fields').value;
+
+        // create a javascript object which will be converted to Json
+        var parameters = {};
+        if (_fields) {
+            parameters['fields'] = _fields
+        }
+
+        // loading and calling the api passing the parameter object
+        gapi.client.load(API_NAME, API_VER, function () {
+            // calling the api passing the parameter object
+            var request = gapi.client.core.timezone.list(parameters);
+
+            // jsonResp object has got a duplication of the data which comes under result element
+            request.execute(function (jsonResp, rawResp) {
+                handlesResponse(jsonResp, rawResp, 'listTimezoneResult');
+            })
+        }, ROOT);
+    }
+
     /**
      * This functions handles the response of the api call
      * It checks if there is a valida result and
@@ -1062,9 +1366,58 @@
                                 <td><span class="description">Update a user</span></td>
                                 <td></td>
                             </tr>
+                            <!-------------------------------- Country calls --------------------------------------->
                             <tr>
                                 <td><a href="javascript:navigate('listOfFunctions','listCountrySection');">core.country.list</a></td>
                                 <td><span class="description">List of countries</span></td>
+                                <td></td>
+                            </tr>
+                            <!-------------------------------- Presentation calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','addPresentationSection');">core.presentation.add</a></td>
+                                <td><span class="description">Add a presentation</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','deletePresentationSection');">core.presentation.delete</a></td>
+                                <td><span class="description">Delete a presentation</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','getPresentationSection');">core.presentation.get</a></td>
+                                <td><span class="description">Get a presentation</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listPresentationSection');">core.presentation.list</a></td>
+                                <td><span class="description">List presentations</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','updatePresentationSection');">core.presentation.update</a></td>
+                                <td><span class="description">Update a presentation</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','publishPresentationSection');">core.presentation.publish</a></td>
+                                <td><span class="description">Publish a presentation</span></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','restorePresentationSection');">core.presentation.restore</a></td>
+                                <td><span class="description">Restore a presentation</span></td>
+                                <td></td>
+                            </tr>
+                            <!-------------------------------- Country calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listTemplateSection');">core.template.list</a></td>
+                                <td><span class="description">List of templates</span></td>
+                                <td></td>
+                            </tr>
+                            <!-------------------------------- Country calls --------------------------------------->
+                            <tr>
+                                <td><a href="javascript:navigate('listOfFunctions','listTimezoneSection');">core.timezone.list</a></td>
+                                <td><span class="description">List of timezones</span></td>
                                 <td></td>
                             </tr>
                             </tbody>
@@ -2491,6 +2844,520 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Response</div>
                                     <div class="panel-body result" id="listCountryResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.presentation.add -->
+                <div id="addPresentationSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('addPresentationSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.presentation.add</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="addPresentation_data" class="col-sm-2 control-label">Data</label>
+
+                                <div class="col-sm-10">
+                                    <textarea id="addPresentation_data" class="dataTextArea"></textarea>
+                                    <span class="description">Json object with pair key value of the company's fields (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="addPresentation_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="addPresentation_companyId" placeholder="">
+                                    <span class="description">The Id of the Company (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="addPresentation_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="addPresentation" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="addPresentationResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="addPresentationResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.presentation.delete -->
+                <div id="deletePresentationSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('deletePresentationSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.presentation.delete</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="deletePresentation_id" class="col-sm-2 control-label">Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="deletePresentation_id" placeholder="">
+                                    <span class="description">The Id of the Presentation (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="deletePresentation_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="deletePresentation" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="deletePresentationResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="deletePresentationResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.presentation.get -->
+                <div id="getPresentationSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('getPresentationSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.presentation.get</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="getPresentation_id" class="col-sm-2 control-label">Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="getPresentation_id" placeholder="">
+                                    <span class="description">The Id of the Presentation (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="getPresentation_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="getPresentation" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="getPresentationResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="getPresentationResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.presentation.list !-->
+                <div id="listPresentationSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('listPresentationSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.presentation.list</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="listPresentation_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listPresentation_companyId" placeholder="">
+                                    <span class="description">The Id of the Company (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listPresentation_count" class="col-sm-2 control-label">Count</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listPresentation_count" placeholder="">
+                                    <span class="description">Max number of results (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listPresentation_cursor" class="col-sm-2 control-label">Cursor</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listPresentation_cursor" placeholder="">
+                                    <span class="description">?? (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listPresentation_search" class="col-sm-2 control-label">Search</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listPresentation_search" placeholder="">
+                                    <span class="description">Search query (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listPresentation_sort" class="col-sm-2 control-label">Sort</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listPresentation_sort" placeholder="">
+                                    <span class="description">Field and direction to sort the results (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listPresentation_fields" class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listPresentation_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="listPresentation" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="listPresentationResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="listPresentationResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.presentation.update -->
+                <div id="updatePresentationSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('updatePresentationSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.presentation.update</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="updatePresentation_data" class="col-sm-2 control-label">Data</label>
+
+                                <div class="col-sm-10">
+                                    <textarea id="updatePresentation_data" class="dataTextArea"></textarea>
+                                    <span class="description">Json object with pair key value of the company's fields (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="updatePresentation_id" class="col-sm-2 control-label">Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="updatePresentation_id" placeholder="">
+                                    <span class="description">The Id of the Presentation (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="updatePresentation_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="updatePresentation" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="updatePresentationResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="updatePresentationResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.presentation.publish -->
+                <div id="publishPresentationSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('publishPresentationSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.presentation.publish</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="publishPresentation_id" class="col-sm-2 control-label">Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="publishPresentation_id" placeholder="">
+                                    <span class="description">The Id of the Presentation (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="publishPresentation_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="publishPresentation" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="publishPresentationResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="publishPresentationResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.presentation.restore -->
+                <div id="restorePresentationSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('restorePresentationSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.presentation.restore</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="restorePresentation_id" class="col-sm-2 control-label">Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="restorePresentation_id" placeholder="">
+                                    <span class="description">The Id of the Presentation (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="restorePresentation_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="restorePresentation" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="restorePresentationResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="restorePresentationResultArea">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.template.list !-->
+                <div id="listTemplateSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('listTemplateSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.template.list</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+                            <div class="form-group">
+                                <label for="listTemplate_companyId" class="col-sm-2 control-label">Company Id</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_companyId" placeholder="">
+                                    <span class="description">The Id of the Company (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_count" class="col-sm-2 control-label">Count</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_count" placeholder="">
+                                    <span class="description">Max number of results (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_cursor" class="col-sm-2 control-label">Cursor</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_cursor" placeholder="">
+                                    <span class="description">?? (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_search" class="col-sm-2 control-label">Search</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_search" placeholder="">
+                                    <span class="description">Search query (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_sort" class="col-sm-2 control-label">Sort</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_sort" placeholder="">
+                                    <span class="description">Field and direction to sort the results (String)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="listTemplate_fields" class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTemplate_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="listTemplate" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="listTemplateResult">
+                            <div class="row responsePanel">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Response</div>
+                                        <div class="panel-body result" id="listTemplateResultArea">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- html elements for core.timezone.list -->
+                <div id="listTimezoneSection" class="callSection">
+                    <div>
+                        <ol class="breadcrumb">
+                            <li><a href="javascript:navigate('listTimezoneSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.timezone.list</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <form class="form-horizontal form" action="javascript:void(0);">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Fields</label>
+
+                                <div class="col-sm-10">
+                                    <input id="listTimezone_fields" placeholder="">
+                                    <span class="description">Selector specifying which fields to include in a partial response</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button id="listTimezone" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+                                        Execute <i class="fa fa-white fa-check icon-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="listTimezoneResult">
+                        <div class="row responsePanel">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Response</div>
+                                    <div class="panel-body result" id="listTimezoneResultArea">
                                     </div>
                                 </div>
                             </div>
