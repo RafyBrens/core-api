@@ -18,23 +18,23 @@ function getSampleJson(dataTextAreaId){
 
     switch (dataTextAreaId){
         case "addCompany_data":
-        case "updateCompany_data":
+        case "patchCompany_data":
             _sampleJson = getCompanySampleJson();
             break;
         case "addDisplay_data":
-        case "updateDisplay_data":
+        case "patchDisplay_data":
             _sampleJson = getDisplaySampleJson();
             break;
         case "addSchedule_data":
-        case "updateSchedule_data":
+        case "patchSchedule_data":
             _sampleJson = getScheduleSampleJson();
             break;
         case "addUser_data":
-        case "updateUser_data":
+        case "patchUser_data":
             _sampleJson = getUserSampleJson();
             break;
         case "addPresentation_data":
-        case "updatePresentation_data":
+        case "patchPresentation_data":
             _sampleJson = getPresentationSampleJson();
             break;
     }

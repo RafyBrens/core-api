@@ -1,17 +1,17 @@
 /**
  * Created by rodrigopavezi on 11/14/14.
  */
-function updatePresentation() {
-    console.log('updatePresentation');
+function patchCompany() {
+    console.log('patchCompany');
     // getting parameter values
-    var _data = document.getElementById('updatePresentation_data').value;
-    var _id = document.getElementById('updatePresentation_id').value;
-    var _fields = document.getElementById('updatePresentation_fields').value;
+    var _data = document.getElementById('patchCompany_data').value;
+    var _id = document.getElementById('patchCompany_id').value;
+    var _fields = document.getElementById('patchCompany_fields').value;
 
     // create a javascript object which will be converted to Json
     var parameters = {};
     if (_data) {
-        parameters['data'] = _data;
+        parameters['data'] = JSON.parse(_data);
     }
     if (_id) {
         parameters['id'] = _id;
@@ -22,10 +22,10 @@ function updatePresentation() {
 
     // loading and calling the api passing the parameter object
     gapi.client.load(API_NAME, API_VER, function () {
-        var request = gapi.client.core.presentation.update(parameters);
+        var request = gapi.client.core.company.patch(parameters);
 
         request.execute(function (jsonResp, rawResp) {
-            handlesResponse(jsonResp, rawResp, 'updatePresentationResult');
+            handlesResponse(jsonResp, rawResp, 'patchCompanyResult');
         });
     }, ROOT);
 }

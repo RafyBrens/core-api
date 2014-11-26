@@ -14,7 +14,7 @@
     <script src="javascript/endpoints/company/core.company.delete.js"></script>
     <script src="javascript/endpoints/company/core.company.get.js"></script>
     <script src="javascript/endpoints/company/core.company.list.js"></script>
-    <script src="javascript/endpoints/company/core.company.update.js"></script>
+    <script src="javascript/endpoints/company/core.company.patch.js"></script>
     <script src="javascript/endpoints/company/core.company.lookup.js"></script>
     <script src="javascript/endpoints/company/core.company.move.js"></script>
     <script src="javascript/endpoints/company/core.company.regenerateField.js"></script>
@@ -23,25 +23,25 @@
     <script src="javascript/endpoints/display/core.display.delete.js"></script>
     <script src="javascript/endpoints/display/core.display.get.js"></script>
     <script src="javascript/endpoints/display/core.display.list.js"></script>
-    <script src="javascript/endpoints/display/core.display.update.js"></script>
+    <script src="javascript/endpoints/display/core.display.patch.js"></script>
 
     <script src="javascript/endpoints/schedule/core.schedule.add.js"></script>
     <script src="javascript/endpoints/schedule/core.schedule.delete.js"></script>
     <script src="javascript/endpoints/schedule/core.schedule.get.js"></script>
     <script src="javascript/endpoints/schedule/core.schedule.list.js"></script>
-    <script src="javascript/endpoints/schedule/core.schedule.update.js"></script>
+    <script src="javascript/endpoints/schedule/core.schedule.patch.js"></script>
 
     <script src="javascript/endpoints/user/core.user.add.js"></script>
     <script src="javascript/endpoints/user/core.user.delete.js"></script>
     <script src="javascript/endpoints/user/core.user.get.js"></script>
     <script src="javascript/endpoints/user/core.user.list.js"></script>
-    <script src="javascript/endpoints/user/core.user.update.js"></script>
+    <script src="javascript/endpoints/user/core.user.patch.js"></script>
 
     <script src="javascript/endpoints/presentation/core.presentation.add.js"></script>
     <script src="javascript/endpoints/presentation/core.presentation.delete.js"></script>
     <script src="javascript/endpoints/presentation/core.presentation.get.js"></script>
     <script src="javascript/endpoints/presentation/core.presentation.list.js"></script>
-    <script src="javascript/endpoints/presentation/core.presentation.update.js"></script>
+    <script src="javascript/endpoints/presentation/core.presentation.patch.js"></script>
     <script src="javascript/endpoints/presentation/core.presentation.publish.js"></script>
     <script src="javascript/endpoints/presentation/core.presentation.restore.js"></script>
 
@@ -93,9 +93,9 @@
             handleExecuteAction("moveCompanySection");
             moveCompany();
         };
-        document.getElementById('updateCompany').onclick = function () {
-            handleExecuteAction("updateCompanySection");
-            updateCompany();
+        document.getElementById('patchCompany').onclick = function () {
+            handleExecuteAction("patchCompanySection");
+            patchCompany();
         };
         document.getElementById('regenerateFieldCompany').onclick = function () {
             handleExecuteAction("regenerateFieldCompanySection");
@@ -117,9 +117,9 @@
             handleExecuteAction("listDisplaySection");
             listDisplay();
         };
-        document.getElementById('updateDisplay').onclick = function () {
-            handleExecuteAction("updateDisplaySection");
-            updateDisplay();
+        document.getElementById('patchDisplay').onclick = function () {
+            handleExecuteAction("patchDisplaySection");
+            patchDisplay();
         };
         document.getElementById('addSchedule').onclick = function () {
             handleExecuteAction("addScheduleSection");
@@ -137,9 +137,9 @@
             handleExecuteAction("listScheduleSection");
             listSchedule();
         };
-        document.getElementById('updateSchedule').onclick = function () {
-            handleExecuteAction("updateScheduleSection");
-            updateSchedule();
+        document.getElementById('patchSchedule').onclick = function () {
+            handleExecuteAction("patchScheduleSection");
+            patchSchedule();
         };
         document.getElementById('listSystemmessage').onclick = function () {
             handleExecuteAction("listSystemmessageSection");
@@ -161,9 +161,9 @@
             handleExecuteAction("listUserSection");
             listUser();
         };
-        document.getElementById('updateUser').onclick = function () {
-            handleExecuteAction("updateUserSection");
-            updateUser();
+        document.getElementById('patchUser').onclick = function () {
+            handleExecuteAction("patchUserSection");
+            patchUser();
         };
         document.getElementById('listCountry').onclick = function () {
             handleExecuteAction("listCountrySection");
@@ -185,9 +185,9 @@
             handleExecuteAction("listPresentationSection");
             listPresentation();
         };
-        document.getElementById('updatePresentation').onclick = function () {
-            handleExecuteAction("updatePresentationSection");
-            updatePresentation();
+        document.getElementById('patchPresentation').onclick = function () {
+            handleExecuteAction("patchPresentationSection");
+            patchPresentation();
         };
         document.getElementById('publishPresentation').onclick = function () {
             handleExecuteAction("publishPresentationSection");
@@ -303,8 +303,8 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updateCompanySection');">core.company.update</a></td>
-                                <td><span class="description">Update a company</span></td>
+                                <td><a href="javascript:navigate('listOfFunctions','patchCompanySection');">core.company.patch</a></td>
+                                <td><span class="description">Patch a company</span></td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -334,8 +334,8 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updateDisplaySection');">core.display.update</a></td>
-                                <td><span class="description">Update a display</span></td>
+                                <td><a href="javascript:navigate('listOfFunctions','patchDisplaySection');">core.display.patch</a></td>
+                                <td><span class="description">Patch a display</span></td>
                                 <td></td>
                             </tr>
                             <!-------------------------------- Schedule calls --------------------------------------->
@@ -360,8 +360,8 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updateScheduleSection');">core.schedule.update</a></td>
-                                <td><span class="description">Update a schedule</span></td>
+                                <td><a href="javascript:navigate('listOfFunctions','patchScheduleSection');">core.schedule.patch</a></td>
+                                <td><span class="description">Patch a schedule</span></td>
                                 <td></td>
                             </tr>
                             <!-------------------------------- Systemmessage calls --------------------------------------->
@@ -392,8 +392,8 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updateUserSection');">core.user.update</a></td>
-                                <td><span class="description">Update a user</span></td>
+                                <td><a href="javascript:navigate('listOfFunctions','patchUserSection');">core.user.patch</a></td>
+                                <td><span class="description">Patch a user</span></td>
                                 <td></td>
                             </tr>
                             <!-------------------------------- Country calls --------------------------------------->
@@ -424,8 +424,8 @@
                                 <td></td>
                             </tr>
                             <tr>
-                                <td><a href="javascript:navigate('listOfFunctions','updatePresentationSection');">core.presentation.update</a></td>
-                                <td><span class="description">Update a presentation</span></td>
+                                <td><a href="javascript:navigate('listOfFunctions','patchPresentationSection');">core.presentation.patch</a></td>
+                                <td><span class="description">Patch a presentation</span></td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -789,29 +789,29 @@
                         </div>
                     </div>
 
-                    <!-- html elements for core.company.update -->
-                    <div id="updateCompanySection" class="callSection">
+                    <!-- html elements for core.company.patch -->
+                    <div id="patchCompanySection" class="callSection">
                         <div>
                             <ol class="breadcrumb">
-                                <li><a href="javascript:navigate('updateCompanySection','listOfFunctions');">Core API</a></li>
-                                <li class="active">core.company.update</li>
+                                <li><a href="javascript:navigate('patchCompanySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.company.patch</li>
                             </ol>
                         </div>
                         <div>
                             <form class="form-horizontal form" action="javascript:void(0);">
                                 <div class="form-group">
-                                    <label for="updateCompany_data" class="col-sm-2 control-label">Data</label>
+                                    <label for="patchCompany_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <textarea id="updateCompany_data" class="dataTextArea"></textarea>
+                                        <textarea id="patchCompany_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the company's fields (String)</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateCompany_id" class="col-sm-2 control-label">Id</label>
+                                    <label for="patchCompany_id" class="col-sm-2 control-label">Id</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateCompany_id" placeholder="">
+                                        <input id="patchCompany_id" placeholder="">
                                         <span class="description">The Id of the Company (String)</span>
                                     </div>
                                 </div>
@@ -819,13 +819,13 @@
                                     <label class="col-sm-2 control-label">Fields</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateCompany_fields" placeholder="">
+                                        <input id="patchCompany_fields" placeholder="">
                                         <span class="description">Selector specifying which fields to include in a partial response</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button id="updateCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <button id="patchCompany" type="button" class="btn btn-success btn-fixed-width has-spinner">
                                             <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
                                             Execute <i class="fa fa-white fa-check icon-right"></i>
                                         </button>
@@ -833,12 +833,12 @@
                                 </div>
                             </form>
                         </div>
-                        <div id="updateCompanyResult">
+                        <div id="patchCompanyResult">
                             <div class="row responsePanel">
                                 <div class="col-md-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Response</div>
-                                        <div class="panel-body result" id="updateCompanyResultArea">
+                                        <div class="panel-body result" id="patchCompanyResultArea">
                                         </div>
                                     </div>
                                 </div>
@@ -1139,29 +1139,29 @@
                         </div>
                     </div>
 
-                    <!-- html elements for core.display.update -->
-                    <div id="updateDisplaySection" class="callSection">
+                    <!-- html elements for core.display.patch -->
+                    <div id="patchDisplaySection" class="callSection">
                         <div>
                             <ol class="breadcrumb">
-                                <li><a href="javascript:navigate('updateDisplaySection','listOfFunctions');">Core API</a></li>
-                                <li class="active">core.display.update</li>
+                                <li><a href="javascript:navigate('patchDisplaySection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.display.patch</li>
                             </ol>
                         </div>
                         <div>
                             <form class="form-horizontal form" action="javascript:void(0);">
                                 <div class="form-group">
-                                    <label for="updateDisplay_data" class="col-sm-2 control-label">Data</label>
+                                    <label for="patchDisplay_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <textarea id="updateDisplay_data" class="dataTextArea"></textarea>
+                                        <textarea id="patchDisplay_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the display's fields (String)</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateDisplay_id" class="col-sm-2 control-label">Id</label>
+                                    <label for="patchDisplay_id" class="col-sm-2 control-label">Id</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateDisplay_id" placeholder="">
+                                        <input id="patchDisplay_id" placeholder="">
                                         <span class="description">The Id of the Display (String)</span>
                                     </div>
                                 </div>
@@ -1169,13 +1169,13 @@
                                     <label class="col-sm-2 control-label">Fields</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateDisplay_fields" placeholder="">
+                                        <input id="patchDisplay_fields" placeholder="">
                                         <span class="description">Selector specifying which fields to include in a partial response</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button id="updateDisplay" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <button id="patchDisplay" type="button" class="btn btn-success btn-fixed-width has-spinner">
                                             <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
                                             Execute <i class="fa fa-white fa-check icon-right"></i>
                                         </button>
@@ -1183,12 +1183,12 @@
                                 </div>
                             </form>
                         </div>
-                        <div id="updateDisplayResult">
+                        <div id="patchDisplayResult">
                             <div class="row responsePanel">
                                 <div class="col-md-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Response</div>
-                                        <div class="panel-body result" id="updateDisplayResultArea">
+                                        <div class="panel-body result" id="patchDisplayResultArea">
                                         </div>
                                     </div>
                                 </div>
@@ -1432,29 +1432,29 @@
                         </div>
                     </div>
 
-                    <!-- html elements for core.schedule.update -->
-                    <div id="updateScheduleSection" class="callSection">
+                    <!-- html elements for core.schedule.patch -->
+                    <div id="patchScheduleSection" class="callSection">
                         <div>
                             <ol class="breadcrumb">
-                                <li><a href="javascript:navigate('updateScheduleSection','listOfFunctions');">Core API</a></li>
-                                <li class="active">core.schedule.update</li>
+                                <li><a href="javascript:navigate('patchScheduleSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.schedule.patch</li>
                             </ol>
                         </div>
                         <div>
                             <form class="form-horizontal form" action="javascript:void(0);">
                                 <div class="form-group">
-                                    <label for="updateSchedule_data" class="col-sm-2 control-label">Data</label>
+                                    <label for="patchSchedule_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <textarea id="updateSchedule_data" class="dataTextArea"></textarea>
+                                        <textarea id="patchSchedule_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the company's fields (String)</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateSchedule_id" class="col-sm-2 control-label">Id</label>
+                                    <label for="patchSchedule_id" class="col-sm-2 control-label">Id</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateSchedule_id" placeholder="">
+                                        <input id="patchSchedule_id" placeholder="">
                                         <span class="description">The Id of the Schedule (String)</span>
                                     </div>
                                 </div>
@@ -1462,13 +1462,13 @@
                                     <label class="col-sm-2 control-label">Fields</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateSchedule_fields" placeholder="">
+                                        <input id="patchSchedule_fields" placeholder="">
                                         <span class="description">Selector specifying which fields to include in a partial response</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button id="updateSchedule" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <button id="patchSchedule" type="button" class="btn btn-success btn-fixed-width has-spinner">
                                             <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
                                             Execute <i class="fa fa-white fa-check icon-right"></i>
                                         </button>
@@ -1476,12 +1476,12 @@
                                 </div>
                             </form>
                         </div>
-                        <div id="updateScheduleResult">
+                        <div id="patchScheduleResult">
                             <div class="row responsePanel">
                                 <div class="col-md-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Response</div>
-                                        <div class="panel-body result" id="updateScheduleResultArea">
+                                        <div class="panel-body result" id="patchScheduleResultArea">
                                         </div>
                                     </div>
                                 </div>
@@ -1782,29 +1782,29 @@
                         </div>
                     </div>
 
-                    <!-- html elements for core.user.update -->
-                    <div id="updateUserSection" class="callSection">
+                    <!-- html elements for core.user.patch -->
+                    <div id="patchUserSection" class="callSection">
                         <div>
                             <ol class="breadcrumb">
-                                <li><a href="javascript:navigate('updateUserSection','listOfFunctions');">Core API</a></li>
-                                <li class="active">core.user.update</li>
+                                <li><a href="javascript:navigate('patchUserSection','listOfFunctions');">Core API</a></li>
+                                <li class="active">core.user.patch</li>
                             </ol>
                         </div>
                         <div>
                             <form class="form-horizontal form" action="javascript:void(0);">
                                 <div class="form-group">
-                                    <label for="updateUser_data" class="col-sm-2 control-label">Data</label>
+                                    <label for="patchUser_data" class="col-sm-2 control-label">Data</label>
 
                                     <div class="col-sm-10">
-                                        <textarea id="updateUser_data" class="dataTextArea"></textarea>
+                                        <textarea id="patchUser_data" class="dataTextArea"></textarea>
                                         <span class="description">Json object with pair key value of the company's fields (String)</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="updateUser_username" class="col-sm-2 control-label">Username</label>
+                                    <label for="patchUser_username" class="col-sm-2 control-label">Username</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateUser_username" placeholder="">
+                                        <input id="patchUser_username" placeholder="">
                                         <span class="description">The Username of the User (String)</span>
                                     </div>
                                 </div>
@@ -1812,13 +1812,13 @@
                                     <label class="col-sm-2 control-label">Fields</label>
 
                                     <div class="col-sm-10">
-                                        <input id="updateUser_fields" placeholder="">
+                                        <input id="patchUser_fields" placeholder="">
                                         <span class="description">Selector specifying which fields to include in a partial response</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button id="updateUser" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                        <button id="patchUser" type="button" class="btn btn-success btn-fixed-width has-spinner">
                                             <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
                                             Execute <i class="fa fa-white fa-check icon-right"></i>
                                         </button>
@@ -1826,12 +1826,12 @@
                                 </div>
                             </form>
                         </div>
-                        <div id="updateUserResult">
+                        <div id="patchUserResult">
                             <div class="row responsePanel">
                                 <div class="col-md-12">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Response</div>
-                                        <div class="panel-body result" id="updateUserResultArea">
+                                        <div class="panel-body result" id="patchUserResultArea">
                                         </div>
                                     </div>
                                 </div>
@@ -2117,29 +2117,29 @@
                     </div>
                 </div>
 
-                <!-- html elements for core.presentation.update -->
-                <div id="updatePresentationSection" class="callSection">
+                <!-- html elements for core.presentation.patch -->
+                <div id="patchPresentationSection" class="callSection">
                     <div>
                         <ol class="breadcrumb">
-                            <li><a href="javascript:navigate('updatePresentationSection','listOfFunctions');">Core API</a></li>
-                            <li class="active">core.presentation.update</li>
+                            <li><a href="javascript:navigate('patchPresentationSection','listOfFunctions');">Core API</a></li>
+                            <li class="active">core.presentation.patch</li>
                         </ol>
                     </div>
                     <div>
                         <form class="form-horizontal form" action="javascript:void(0);">
                             <div class="form-group">
-                                <label for="updatePresentation_data" class="col-sm-2 control-label">Data</label>
+                                <label for="patchPresentation_data" class="col-sm-2 control-label">Data</label>
 
                                 <div class="col-sm-10">
-                                    <textarea id="updatePresentation_data" class="dataTextArea"></textarea>
+                                    <textarea id="patchPresentation_data" class="dataTextArea"></textarea>
                                     <span class="description">Json object with pair key value of the company's fields (String)</span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="updatePresentation_id" class="col-sm-2 control-label">Id</label>
+                                <label for="patchPresentation_id" class="col-sm-2 control-label">Id</label>
 
                                 <div class="col-sm-10">
-                                    <input id="updatePresentation_id" placeholder="">
+                                    <input id="patchPresentation_id" placeholder="">
                                     <span class="description">The Id of the Presentation (String)</span>
                                 </div>
                             </div>
@@ -2147,13 +2147,13 @@
                                 <label class="col-sm-2 control-label">Fields</label>
 
                                 <div class="col-sm-10">
-                                    <input id="updatePresentation_fields" placeholder="">
+                                    <input id="patchPresentation_fields" placeholder="">
                                     <span class="description">Selector specifying which fields to include in a partial response</span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-2 col-sm-10">
-                                    <button id="updatePresentation" type="button" class="btn btn-success btn-fixed-width has-spinner">
+                                    <button id="patchPresentation" type="button" class="btn btn-success btn-fixed-width has-spinner">
                                         <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
                                         Execute <i class="fa fa-white fa-check icon-right"></i>
                                     </button>
@@ -2161,12 +2161,12 @@
                             </div>
                         </form>
                     </div>
-                    <div id="updatePresentationResult">
+                    <div id="patchPresentationResult">
                         <div class="row responsePanel">
                             <div class="col-md-12">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">Response</div>
-                                    <div class="panel-body result" id="updatePresentationResultArea">
+                                    <div class="panel-body result" id="patchPresentationResultArea">
                                     </div>
                                 </div>
                             </div>
