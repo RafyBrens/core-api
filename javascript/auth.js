@@ -18,10 +18,23 @@
  * @type {string}
  */
 
+var DEV_DOMAIN = "localhost";
+var STAGE_DOMAIN = "rodrigopavezi.github.io";
+var PROD_DOMAIN = "rise-vision.github.io";
+
+// This checks which ROOT to use based on the domain.
+var ROOT = "";
+if(location.hostname == DEV_DOMAIN){
+    ROOT = 'https://rvacore-test.appspot.com/_ah/api'; //Api for local development
+}else if(location.hostname == STAGE_DOMAIN) {
+    ROOT = 'https://rvacore-test.appspot.com/_ah/api'; //Api for stage environment
+}else if(location.hostname == PROD_DOMAIN) {
+    ROOT = 'https://rvaserver2.appspot.com/_ah/api'; //Api for github pages
+}
+
 CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleusercontent.com'; // CLIENT_ID for github pages
 
 var SCOPES = 'https://www.googleapis.com/auth/userinfo.email';
-var ROOT = 'https://rvaserver2.appspot.com/_ah/api';
 var API_NAME = 'core';
 var API_VER = 'v1';
 
