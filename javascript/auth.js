@@ -22,20 +22,21 @@ var DEV_DOMAIN = "localhost";
 var STAGE_DOMAIN = "rodrigopavezi.github.io";
 var PROD_DOMAIN = "rise-vision.github.io";
 
-// This checks which CLIENT_ID to use based on the domain.
-var CLIENT_ID = "";
+// This checks which ROOT to use based on the domain.
+var ROOT = "";
 if(location.hostname == DEV_DOMAIN){
-    CLIENT_ID = '1078646427254-mb590bbaki7a6qlr7rsoq2cc76rn0d42.apps.googleusercontent.com'; //CLIENT_ID for local development
+    ROOT = 'https://rvacore-test.appspot.com/_ah/api'; //Api for local development
 }else if(location.hostname == STAGE_DOMAIN) {
-    CLIENT_ID = '1039315471777-q6nuamfhek5r963vtag5t1h8k5pvos9p.apps.googleusercontent.com'; //CLIENT_ID for stage environment
+    ROOT = 'https://rvacore-test.appspot.com/_ah/api'; //Api for stage environment
 }else if(location.hostname == PROD_DOMAIN) {
-    CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleusercontent.com'; // CLIENT_ID for github pages
+    ROOT = 'https://rvaserver2.appspot.com/_ah/api'; //Api for github pages
 }
 
+CLIENT_ID = '1039315471777-oqrb8m2qfkrfp2hv2f9dta5jf72ob72p.apps.googleusercontent.com'; // CLIENT_ID for github pages
+
 var SCOPES = 'https://www.googleapis.com/auth/userinfo.email';
-var ROOT = 'https://rvacore-test.appspot.com/_ah/api';
 var API_NAME = 'core';
-var API_VER = 'v0';
+var API_VER = 'v1';
 
 /**
  * Load the oauth2 api.

@@ -11,7 +11,7 @@ function addCompany() {
     // create a javascript object which will be converted to Json
     var parameters = {};
     if (_data) {
-        parameters['data'] = _data;
+        parameters['data'] = JSON.parse(_data);
     }
     if (_parentId) {
         parameters['parentId'] = _parentId;
@@ -23,7 +23,7 @@ function addCompany() {
     // loading and calling the api passing the parameter object
     gapi.client.load(API_NAME, API_VER, function () {
         var request = gapi.client.core.company.add(parameters);
-
+        console.log(parameters);
         request.execute(function (jsonResp, rawResp) {
             handlesResponse(jsonResp, rawResp, 'addCompanyResult');
         });

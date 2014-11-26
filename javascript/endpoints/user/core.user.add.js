@@ -12,7 +12,7 @@ function addUser() {
     // create a javascript object which will be converted to Json
     var parameters = {};
     if (_data) {
-        parameters['data'] = _data;
+        parameters['data'] = JSON.parse(_data);
     }
     if (_companyId) {
         parameters['companyId'] = _companyId;
