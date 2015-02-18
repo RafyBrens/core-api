@@ -121,6 +121,14 @@
             handleExecuteAction("patchDisplaySection");
             patchDisplay();
         };
+        document.getElementById('rebootDisplay').onclick = function () {
+            handleExecuteAction("rebootDisplaySection");
+            rebootDisplay();
+        };
+        document.getElementById('restartDisplay').onclick = function () {
+            handleExecuteAction("restartDisplaySection");
+            restartDisplay();
+        };
         document.getElementById('addSchedule').onclick = function () {
             handleExecuteAction("addScheduleSection");
             addSchedule();
