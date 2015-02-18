@@ -18,7 +18,7 @@ function restartDisplay() {
 
     // loading and calling the api passing the parameter object
     gapi.client.load(API_NAME, API_VER, function () {
-        var request = gapi.client.core.display.reboot(parameters);
+        var request = gapi.client.core.display.restart(parameters);
 
         request.execute(function (jsonResp, rawResp) {
             handlesResponse(jsonResp, rawResp, 'restartDisplayResult');
